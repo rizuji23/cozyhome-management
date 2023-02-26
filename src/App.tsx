@@ -1,26 +1,53 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import { Routes, Route } from 'react-router-dom';
+import Login from './component/Login';
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/js/bootstrap";
+import { sidebar } from './js/main';
+import Dashboard from './component/Dashboard';
+import Projek from './component/Projek';
+import AddProjek from './component/AddProjek';
+import DetailProjek from './component/DetailProjek';
+import Customer from './component/Customer';
+import AddCustomer from './component/AddCustomer';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component<any, any> {
+  constructor(props) {
+    super(props);
+  }
+
+  componentDidMount(): void {
+    sidebar();
+  }
+
+  render(): React.ReactNode {
+    return (
+      <Routes>
+        <Route path="/" element={<Login />}></Route>
+        <Route path="/dashboard" element={<Dashboard />}></Route>
+
+
+        <Route path='/projek' element={<Projek />}></Route>
+        <Route path='/tambah_projek' element={<AddProjek />}></Route>
+        <Route path='/detail_projek' element={<DetailProjek />}></Route>
+
+
+        <Route path='/customer' element={<Customer />}></Route>
+        <Route path='/tambah_customer' element={<AddCustomer />}></Route>
+
+      </Routes>
+    )
+  }
 }
+
+// function App() {
+//   return (
+//     <Routes>
+//       <Route path="/" element={<Login />}></Route>
+//     </Routes>
+//   );
+// }
 
 export default App;
