@@ -12,6 +12,7 @@ import AddProjek from './component/AddProjek';
 import DetailProjek from './component/DetailProjek';
 import Customer from './component/Customer';
 import AddCustomer from './component/AddCustomer';
+import DetailProgress from './component/DetailProgress';
 
 class App extends React.Component<any, any> {
   constructor(props) {
@@ -36,6 +37,7 @@ class App extends React.Component<any, any> {
 
         <Route path='/customer' element={<Customer />}></Route>
         <Route path='/tambah_customer' element={<AddCustomer />}></Route>
+        <Route path='/detail_progress' element={<DetailProgress />}></Route>
 
       </Routes>
     )

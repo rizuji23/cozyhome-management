@@ -1,19 +1,11 @@
 import React from 'react';
 import { Modal, Button } from 'react-bootstrap';
-import SelectSearch from 'react-select-search';
 import 'react-select-search/style.css'
 
 class ModalAddProgress extends React.Component<any, any> {
     constructor(props) {
         super(props);
-        this.state = {
-            data: [
-                {
-                    name: "Triplek",
-                    value: "Triplek"
-                }
-            ]
-        }
+
     }
 
     render(): React.ReactNode {
@@ -25,8 +17,20 @@ class ModalAddProgress extends React.Component<any, any> {
                     </Modal.Header>
                     <Modal.Body>
                         <div className='form-group'>
-                            <label htmlFor="">Nama Progress</label>
+                            <label htmlFor="">Judul Progress</label>
                             <input type="text" className="form-control" />
+                        </div>
+
+                        <div className='form-group mt-3'>
+                            <label htmlFor="">Status Progress</label>
+                            <select name="" className='form-control' id="">
+                                <option value="">Pilih Status</option>
+                                <option value="P25">On Progress 25%</option>
+                                <option value="P50">On Progress 50%</option>
+                                <option value="P100">On Progress 100%</option>
+                                <option value="ASB">Perakitan Projek Di Lokasi</option>
+                                <option value="DONE">Projek Selesai</option>
+                            </select>
                         </div>
 
                         <div className='form-group mt-3'>

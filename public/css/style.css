@@ -5172,3 +5172,80 @@ body.dark .notification-list .list .no-seen {
 .custom-scroll {
     height: 100%
 }
+
+.box-progress {
+    width: 100%;
+    background-color: #C1D9E5;
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+.card {
+    border: none !important;
+    border-radius: 10px !important;
+}
+
+.box-progress .card-body {
+    padding: 30px 50px 30px 50px;
+}
+
+.is-complete {
+    background-color: #0E7DF3 !important;
+
+}
+
+.tracking-circle {
+    width: 20px;
+    height: 20px;
+    border-radius: 100px;
+    background-color: #C1D9E5;
+}
+
+.tracking-line {
+    width: 100%;
+    height: 5px;
+    background-color: #C1D9E5;
+}
+
+.tracking-item {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+
+.progress-ket img {
+    width: 55px;
+}
+
+.progress-ket {
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+
+.progress-ket p {
+    margin-bottom: 0px;
+    color: #212529 !important;
+    font-weight: 700;
+    font-size: 14px;
+}
+
+.nav-tabs .nav-link {
+    border: none !important;
+    border-bottom: 3px solid #0E7DF3 !important;
+    color: #1E1D2B !important;
+}
+
+.progress-item-head {
+    width: 100%;
+    background-color: #dce7ed;
+    padding: 3px 10px;
+    border-radius: 4px;
+}
+
+.rincian-progress-item ul {
+    margin-top: 20px;
+}
+
+.item-progress p {
+    color: black;
+}

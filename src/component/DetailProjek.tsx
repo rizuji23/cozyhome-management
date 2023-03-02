@@ -7,6 +7,7 @@ import ModalAddBahan from './modal/ModalAddBahan';
 import ModalAddProgress from './modal/ModalAddProgress';
 import ModalEditInformasi from './modal/ModalEditInformasi';
 import ModalEditCost from './modal/ModalEditCost';
+import { Link } from 'react-router-dom';
 
 class DetailProjek extends React.Component<any, any> {
     constructor(props) {
@@ -66,8 +67,12 @@ class DetailProjek extends React.Component<any, any> {
                     width: "50px"
                 },
                 {
-                    name: "Progress",
+                    name: "Judul Progress",
                     selector: row => row.nama_progress,
+                },
+                {
+                    name: "Status",
+                    selector: row => row.status
                 },
                 {
                     name: "Deskripsi",
@@ -83,6 +88,7 @@ class DetailProjek extends React.Component<any, any> {
                     no: 1,
                     nama_progress: "Test Unit",
                     desc: "Lorem ipsum, dolor sit amet consectetur adipisicing elit.",
+                    status: <><span className="badge text-bg-info">On Progress 25%</span></>,
                     created_at: "23-02-2023",
                 }
             ],
@@ -101,6 +107,10 @@ class DetailProjek extends React.Component<any, any> {
                     selector: row => row.desc,
                 },
                 {
+                    name: "Harga",
+                    selector: row => row.harga_lain
+                },
+                {
                     name: "Tanggal",
                     selector: row => row.created_at,
                 }
@@ -110,6 +120,7 @@ class DetailProjek extends React.Component<any, any> {
                     no: 1,
                     nama_progress: "Pengecatan Area Dinding Kitchen",
                     desc: "ukuran 20 m2",
+                    harga_lain: "2.000.000",
                     created_at: "23-02-2023",
                 }
             ],
@@ -253,6 +264,10 @@ class DetailProjek extends React.Component<any, any> {
                                     </div>
                                     <div className='box-body'>
                                         <DataTable columns={this.state.column_progress} data={this.state.data_progress} pagination expandableRows />
+
+                                        <div className='d-grid mt-4'>
+                                            <Link to={'/detail_progress'} className='btn btn-primary'>Lihat Detail Progress Projek</Link>
+                                        </div>
                                     </div>
                                 </div>
 
