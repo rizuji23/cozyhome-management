@@ -5231,8 +5231,11 @@ body.dark .notification-list .list .no-seen {
 
 .nav-tabs .nav-link {
     border: none !important;
-    border-bottom: 3px solid #0E7DF3 !important;
     color: #1E1D2B !important;
+}
+
+.nav-tabs {
+    border-bottom: 3px solid #dee2e6 !important;
 }
 
 .progress-item-head {
@@ -5248,4 +5251,8 @@ body.dark .notification-list .list .no-seen {
 
 .item-progress p {
     color: black;
+}
+
+.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+    border-bottom: 3px solid #0e7df3 !important;
 }

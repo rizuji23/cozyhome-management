@@ -13,6 +13,9 @@ import DetailProjek from './component/DetailProjek';
 import Customer from './component/Customer';
 import AddCustomer from './component/AddCustomer';
 import DetailProgress from './component/DetailProgress';
+import DetailCustomer from './component/DetailCustomer';
+import StokGudang from './component/StokGudang';
+import Pengaturan from './component/Pengaturan';
 
 class App extends React.Component<any, any> {
   constructor(props) {
@@ -33,11 +36,15 @@ class App extends React.Component<any, any> {
         <Route path='/projek' element={<Projek />}></Route>
         <Route path='/tambah_projek' element={<AddProjek />}></Route>
         <Route path='/detail_projek' element={<DetailProjek />}></Route>
-
+        <Route path='/detail_progress' element={<DetailProgress />}></Route>
 
         <Route path='/customer' element={<Customer />}></Route>
         <Route path='/tambah_customer' element={<AddCustomer />}></Route>
-        <Route path='/detail_progress' element={<DetailProgress />}></Route>
+        <Route path='/detail_customer' element={<DetailCustomer />}></Route>
+
+        <Route path='/stok_gudang' element={<StokGudang />}></Route>
+
+        <Route path='/pengaturan' element={<Pengaturan />}></Route>
 
       </Routes>
     )

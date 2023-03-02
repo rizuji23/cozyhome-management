@@ -25,20 +25,11 @@ class Navbar extends React.Component<any, any> {
                                     alt="Header Avatar" />
                                 <span className="pulse-css"></span>
                                 <span className="info d-xl-inline-block  color-span">
-                                    <span className="d-block fs-20 font-w600">Randy Riley</span>
-                                    <span className="d-block mt-7" >randy.riley@gmail.com</span>
+                                    <span className="d-block fs-20 font-w600">Aye Shabira</span>
+                                    <span className="d-block mt-7" >Admin</span>
                                 </span>
-
-                                <i className='bx bx-chevron-down'></i>
                             </button>
-                            <div className="dropdown-menu dropdown-menu-end">
-                                <a className="dropdown-item" href="#"><i className="bx bx-user font-size-16 align-middle me-1"></i> <span>Profile</span></a>
-                                <a className="dropdown-item" href="#"><i className="bx bx-wallet font-size-16 align-middle me-1"></i> <span>My Wallet</span></a>
-                                <a className="dropdown-item d-block" href="#"><span className="badge bg-success float-end">11</span><i className="bx bx-wrench font-size-16 align-middle me-1"></i> <span>Settings</span></a>
-                                <a className="dropdown-item" href="#"><i className="bx bx-lock-open font-size-16 align-middle me-1"></i> <span>Lock screen</span></a>
-                                <div className="dropdown-divider"></div>
-                                <a className="dropdown-item text-danger" href="user-login.html"><i className="bx bx-power-off font-size-16 align-middle me-1 text-danger"></i> <span>Logout</span></a>
-                            </div>
+
                         </div>
                     </div>
                 </div>

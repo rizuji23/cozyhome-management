@@ -65,40 +65,24 @@ class Sidebar extends React.Component<any, any> {
                                 </ul>
                             </li>
                             <li>
-                                <a href="board.html">
-                                    <i className='bx bxs-dashboard'></i>
-                                    <span>Board</span>
+                                <a href="/stok_gudang">
+                                    <i className='bx bxs-box'></i>
+                                    <span>Stok Gudang</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="calendar.html">
-                                    <i className='bx bx-calendar'></i>
-                                    <span>Calendar</span>
+                                <a href="/pengaturan">
+                                    <i className='bx bxs-cog'></i>
+                                    <span>Pengaturan</span>
                                 </a>
                             </li>
 
                             <li>
-                                <a href="message.html">
-                                    <i className='bx bxs-message-rounded-detail' ></i>
-                                    <span>Message</span>
+                                <a href="/">
+                                    <i className='bx bxs-log-out-circle' ></i>
+                                    <span>Logout</span>
                                 </a>
                             </li>
-                            <li className="sidebar-submenu">
-                                <a href="chart-apex.html" className="sidebar-menu-dropdown">
-                                    <i className='bx bxs-component' ></i>
-                                    <span>Components</span>
-                                    <div className="dropdown-icon"><i className='bx bx-chevron-down'></i></div>
-                                </a>
-                                <ul className="sidebar-menu sidebar-menu-dropdown-content">
-                                    <li>
-                                        <a href="chart-apex.html">
-                                            Apex Charts
-                                        </a>
-                                    </li>
-
-                                </ul>
-                            </li>
-
                         </ul>
                     </div>
 

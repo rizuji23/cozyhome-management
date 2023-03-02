@@ -19,22 +19,24 @@ class Login extends React.Component<any, any> {
                                 <div className="box">
                                     <div className="box-header d-flex justify-content-between">
                                         <a href="index.html">
-                                            <img src="/images/logo.png" alt="" />
+                                            <img src="/images/logo.png" width={100} alt="" />
                                         </a>
 
                                         <div className="action-reg">
-                                            <h4 className="fs-30">Login</h4>
+                                            <h4 className="fs-30">Project Management</h4>
                                         </div>
 
                                     </div>
                                     <div className="line"></div>
                                     <div className="box-body">
                                         <div className="auth-content my-auto">
-
-                                            <form className="mt-5 pt-2">
+                                            <div className="action-reg text-center">
+                                                <h4 className="fs-30 mb-4">Login</h4>
+                                            </div>
+                                            <form className="mt-2" action='/dashboard'>
                                                 <div className="mb-24">
                                                     <label className="form-label mb-14">Username</label>
-                                                    <input type="text" className="form-control" id="username" placeholder="Your text" />
+                                                    <input type="text" className="form-control" id="username" placeholder="Masukan Username" />
                                                 </div>
                                                 <div className="mb-16">
                                                     <div className="d-flex align-items-start">
@@ -49,7 +51,7 @@ class Login extends React.Component<any, any> {
                                                     </div>
 
                                                     <div className="input-group auth-pass-inputgroup">
-                                                        <input type="password" className="form-control" placeholder="Enter password" aria-label="Password" aria-describedby="password-addon" />
+                                                        <input type="password" className="form-control" placeholder="Masukan Password" aria-label="Password" aria-describedby="password-addon" />
                                                         <button className="btn shadow-none ms-0" type="button" id="password-addon"><i className="far fa-eye-slash"></i></button>
                                                     </div>
                                                 </div>
@@ -64,7 +66,7 @@ class Login extends React.Component<any, any> {
                                                     </div> */}
                                                 </div>
                                                 <div className="mb-3">
-                                                    <button className="btn bg-primary color-white w-100 waves-effect waves-light fs-18 font-w500" type="submit">Sign in</button>
+                                                    <button className="btn bg-primary color-white w-100 waves-effect waves-light fs-18 font-w500" type="submit">Login</button>
                                                 </div>
                                             </form>
                                         </div>

@@ -1,5 +1,6 @@
 import React from "react";
 import ListProgress from "./ListProgress";
+import HelmetTitle from "./etc/HelmetTitle";
 
 class DetailProgress extends React.Component<any, any> {
     constructor(props) {
@@ -9,6 +10,7 @@ class DetailProgress extends React.Component<any, any> {
     render(): React.ReactNode {
         return (
             <>
+                <HelmetTitle title="Detail Progress" />
                 <div className="box-progress">
                     <div className="container">
                         <div className="card">

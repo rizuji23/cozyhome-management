@@ -19,6 +19,10 @@ class Customer extends React.Component<any, any> {
                     selector: row => row.nama_customer,
                 },
                 {
+                    name: "Nama Perusahaan",
+                    selector: row => row.nama_perusahaan,
+                },
+                {
                     name: "No Telp",
                     selector: row => row.no_telp,
                 },
@@ -33,6 +37,7 @@ class Customer extends React.Component<any, any> {
                     nama_customer: <Link to={"/detail_customer"}>Aye Shabira</Link>,
                     no_telp: "089657581114",
                     created_at: "26-02-2023",
+                    nama_perusahaan: "PT Pencari Cinta Sejati"
                 }
             ]
         }

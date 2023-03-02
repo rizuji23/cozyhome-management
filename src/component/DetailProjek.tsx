@@ -8,6 +8,7 @@ import ModalAddProgress from './modal/ModalAddProgress';
 import ModalEditInformasi from './modal/ModalEditInformasi';
 import ModalEditCost from './modal/ModalEditCost';
 import { Link } from 'react-router-dom';
+import ModalAddPekerjaan from './modal/ModalAddPekerjaan';
 
 class DetailProjek extends React.Component<any, any> {
     constructor(props) {
@@ -128,6 +129,7 @@ class DetailProjek extends React.Component<any, any> {
             isOpenProgress: false,
             isOpenInformasi: false,
             isOpenCost: false,
+            isOpenPekerjaan: false,
             data_cost: "",
         }
 
@@ -139,6 +141,8 @@ class DetailProjek extends React.Component<any, any> {
         this.closeInformasi = this.closeInformasi.bind(this);
         this.openCost = this.openCost.bind(this);
         this.closeCost = this.closeCost.bind(this);
+        this.openPekerjaan = this.openPekerjaan.bind(this);
+        this.closePekerjaan = this.closePekerjaan.bind(this);
     }
 
     openBahan() {
@@ -153,6 +157,18 @@ class DetailProjek extends React.Component<any, any> {
         })
     }
 
+    openPekerjaan() {
+        this.setState({
+            isOpenPekerjaan: true,
+        });
+    }
+
+    closePekerjaan() {
+        this.setState({
+            isOpenPekerjaan: false,
+        })
+    }
+
     openProgress() {
         this.setState({
             isOpenProgress: true,
@@ -162,7 +178,7 @@ class DetailProjek extends React.Component<any, any> {
     closeProgress() {
         this.setState({
             isOpenProgress: false,
-        })
+        });
     }
 
     openInformasi() {
@@ -174,7 +190,7 @@ class DetailProjek extends React.Component<any, any> {
     closeInformasi() {
         this.setState({
             isOpenInformasi: false,
-        })
+        });
     }
 
     openCost(data) {
@@ -187,7 +203,7 @@ class DetailProjek extends React.Component<any, any> {
     closeCost() {
         this.setState({
             isOpenCost: false,
-        })
+        });
     }
 
     render(): React.ReactNode {
@@ -245,7 +261,7 @@ class DetailProjek extends React.Component<any, any> {
                                                 <h5>Rincian Pekerjaan Lain-Lain (Kitchen Set)</h5>
                                             </div>
                                             <div>
-                                                <button className='btn btn-primary btn-sm' onClick={this.openBahan}><i className='bx bx-plus'></i> Tambah Pekerjaan</button>
+                                                <button className='btn btn-primary btn-sm' onClick={this.openPekerjaan}><i className='bx bx-plus'></i> Tambah Pekerjaan</button>
                                             </div>
                                         </div>
                                         <DataTable columns={this.state.column_lain} data={this.state.data_lain} pagination />
@@ -266,7 +282,7 @@ class DetailProjek extends React.Component<any, any> {
                                         <DataTable columns={this.state.column_progress} data={this.state.data_progress} pagination expandableRows />
 
                                         <div className='d-grid mt-4'>
-                                            <Link to={'/detail_progress'} className='btn btn-primary'>Lihat Detail Progress Projek</Link>
+                                            <Link to={'/detail_progress'} className='btn btn-primary' target="_blank">Lihat Detail Progress Projek</Link>
                                         </div>
                                     </div>
                                 </div>
@@ -318,11 +334,21 @@ class DetailProjek extends React.Component<any, any> {
                                             </div>
                                         </div>
 
+                                        <div className='mb-4'>
+                                            <p className='mb-1 text-black'>Cost Pekerjaan Lain-Lain</p>
+                                            <div className='d-flex'>
+                                                <div className='me-3'>
+                                                    <h3>Rp. 2.000.000</h3>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
 
                                         <hr />
                                         <div className='alert alert-primary'>
                                             <p className='mb-1 text-primary font-w500'>Total Keseluruhan</p>
-                                            <h3 className='text-primary'>Rp. 70.060.000</h3>
+                                            <h3 className='text-primary'>Rp. 72.060.000</h3>
                                         </div>
 
                                         <div className='mt-3 d-grid'>
@@ -350,6 +376,7 @@ class DetailProjek extends React.Component<any, any> {
                 <ModalAddBahan isOpen={this.state.isOpenBahan} closeModal={this.closeBahan} />
                 <ModalAddProgress isOpen={this.state.isOpenProgress} closeModal={this.closeProgress} />
                 <ModalEditInformasi isOpen={this.state.isOpenInformasi} closeModal={this.closeInformasi} />
+                <ModalAddPekerjaan isOpen={this.state.isOpenPekerjaan} closeModal={this.closePekerjaan} />
                 <ModalEditCost isOpen={this.state.isOpenCost} closeModal={this.closeCost} title={this.state.data_cost} />
             </>
         )
