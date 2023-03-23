@@ -6,6 +6,7 @@ import DataTable, { createTheme } from 'react-data-table-component';
 import { Link } from 'react-router-dom';
 import ProjectModule from '../module/ProjectModule';
 import moment from 'moment';
+import System from '../module/System';
 
 
 class Projek extends React.Component<any, any> {
@@ -59,7 +60,8 @@ class Projek extends React.Component<any, any> {
             result.data.data.project.map(el => {
                 el['no'] = no++;
                 el['nama_project'] = <><Link to={`/detail_projek/${el.id_project}`}>{el.nama_project}</Link></>
-                el['created_at'] = moment(el.created_at, "YYYY-MM-DD").format("DD-MM-YYYY")
+                el['created_at'] = moment(el.created_at, "YYYY-MM-DD").format("DD-MM-YYYY");
+                el['total_cost'] = System.convertRupiah(el.total_cost);
             });
 
             this.setState({

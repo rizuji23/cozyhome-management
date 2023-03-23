@@ -11,6 +11,7 @@ import moment from 'moment'
 import LoadingFull from './etc/LoadingFull';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
+import System from '../module/System';
 
 class DetailCustomer extends React.Component<any, any> {
     constructor(props) {
@@ -64,6 +65,7 @@ class DetailCustomer extends React.Component<any, any> {
                 el['no'] = no++;
                 el['nama_project'] = <><Link to={`/detail_projek/${el.id_project}`}>{el.nama_project}</Link></>
                 el['created_at'] = moment(el.created_at, "YYYY-MM-DD").format("DD-MM-YYYY")
+                el['total_cost'] = System.convertRupiah(el.total_cost);
             });
             this.setState({
                 data: result.data.data.project,

@@ -18,6 +18,9 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 import ProgressProject from '../module/ProgressProject';
 import moment from 'moment';
+import Stok from '../module/Stok';
+import PekerjaanLain from '../module/PekerjaanLain';
+import LoadingFull from './etc/LoadingFull';
 
 class DetailProjek extends React.Component<any, any> {
     constructor(props) {
@@ -30,28 +33,24 @@ class DetailProjek extends React.Component<any, any> {
                     width: "50px"
                 },
                 {
-                    name: "ID",
-                    selector: row => row.id_material,
-                },
-                {
                     name: "Nama",
                     selector: row => row.nama_material,
                 },
                 {
                     name: "Jenis Material",
-                    selector: row => row.jenis_material,
+                    selector: row => row.kategori_material,
                 },
                 {
                     name: "Harga",
-                    selector: row => row.harga_material,
+                    selector: row => System.convertRupiah(row.harga),
                 },
                 {
                     name: "Qty",
-                    selector: row => row.qty,
+                    selector: row => row.stok_out,
                 },
                 {
                     name: "Total All",
-                    selector: row => row.total_all,
+                    selector: row => System.convertRupiah(row.total_all),
                 },
                 {
                     name: "Tanggal",
@@ -91,7 +90,7 @@ class DetailProjek extends React.Component<any, any> {
                 },
                 {
                     name: "Nama Pekerjaan",
-                    selector: row => row.nama_progress,
+                    selector: row => row.nama_pekerjaan,
                 },
                 {
                     name: "Deskripsi",
@@ -99,7 +98,7 @@ class DetailProjek extends React.Component<any, any> {
                 },
                 {
                     name: "Harga",
-                    selector: row => row.harga_lain
+                    selector: row => row.harga
                 },
                 {
                     name: "Tanggal",
@@ -123,6 +122,7 @@ class DetailProjek extends React.Component<any, any> {
                 cost_lain: 0,
             },
             loading_modal: false,
+            loading: true,
         }
 
         console.log(this.props)
@@ -143,6 +143,10 @@ class DetailProjek extends React.Component<any, any> {
         this.handleEditCost = this.handleEditCost.bind(this);
         this.handleSimpanProgress = this.handleSimpanProgress.bind(this);
         this.getProgress = this.getProgress.bind(this);
+        this.handleTambahBahan = this.handleTambahBahan.bind(this);
+        this.getStokOut = this.getStokOut.bind(this);
+        this.handleSimpanPekerjaanLain = this.handleSimpanPekerjaanLain.bind(this);
+        this.getPekerjaanLain = this.getPekerjaanLain.bind(this);
     }
 
     openBahan() {
@@ -207,12 +211,16 @@ class DetailProjek extends React.Component<any, any> {
     }
 
     getDetail() {
+        this.setState({
+            loading: true,
+        })
         const id_project = this.props.params.id;
 
         ProjectModule.getDetail({ id_project: id_project }, this.state.data_auth).then((result) => {
             console.log(result);
             this.setState({
-                data_project: result.data.data.project
+                data_project: result.data.data.project,
+                loading: false,
             })
         }).catch((rejects) => {
             console.log(rejects);
@@ -220,12 +228,16 @@ class DetailProjek extends React.Component<any, any> {
     }
 
     getCost() {
+        this.setState({
+            loading: true,
+        })
         const id_project = this.props.params.id;
 
         Cost.get({ id: id_project }, this.state.data_auth).then((result) => {
             console.log(result);
             this.setState({
-                cost_data: result.data.data.cost_project
+                cost_data: result.data.data.cost_project,
+                loading: false,
             })
         }).catch((rejects) => {
             console.log(rejects);
@@ -233,6 +245,9 @@ class DetailProjek extends React.Component<any, any> {
     }
 
     getProgress() {
+        this.setState({
+            loading: true,
+        })
         const id_project = this.props.params.id;
 
         ProgressProject.get({ id: id_project }, this.state.data_auth).then((result) => {
@@ -243,7 +258,73 @@ class DetailProjek extends React.Component<any, any> {
                 el['created_at'] = moment(el.created_at, "YYYY-MM-DD").format("DD-MM-YYYY");
             })
             this.setState({
-                data_progress: result.data.data.progress_project
+                data_progress: result.data.data.progress_project,
+                loading: false
+            })
+        }).catch((rejects) => {
+            console.log(rejects);
+        })
+    }
+
+    getPekerjaanLain() {
+        this.setState({
+            loading: true,
+        })
+        const id_project = this.props.params.id;
+
+        PekerjaanLain.get({ id: id_project }, this.state.data_auth).then((result) => {
+            console.log(result);
+            let no = 1;
+            result.data.data.pekerjaan_lain.map(el => {
+                el['no'] = no++;
+                el['created_at'] = moment(el.created_at, "YYYY-MM-DD").format("DD-MM-YYYY");
+                el['harga'] = System.convertRupiah(el.harga)
+            })
+            this.setState({
+                data_lain: result.data.data.pekerjaan_lain,
+                loading: false,
+            })
+        }).catch((rejects) => {
+            console.log(rejects);
+        })
+    }
+
+    getStokOut() {
+        this.setState({
+            loading: true,
+        })
+        const id_project = this.props.params.id;
+
+        Stok.getList({ id_project: id_project }, this.state.data_auth).then((result) => {
+            console.log(result);
+            let no = 1;
+            result.data.data.stok_out.map(el => {
+                el['created_at'] = moment(el.created_at, "YYYY-MM-DD").format("DD-MM-YYYY");
+                el['harga'] = System.convertRupiah(el.harga);
+            });
+
+            const data = []
+
+            result.data.data.stok_out.reduce((res, val) => {
+                if (!res[val.id_material_2]) {
+                    res[val.id_material_2] = { id_material_2: val.id_material_2, nama_material: val.nama_material, kategori_material: val.kategori_material, harga: System.convertInt(val.harga), stok_out: 0, total_all: 0, created_at: val.created_at };
+                    data.push(res[val.id_material_2]);
+                }
+
+                res[val.id_material_2].stok_out += val.stok_out;
+                res[val.id_material_2].total_all += val.stok_out * System.convertInt(val.harga);
+                return res
+            }, {});
+
+            data.map((el) => {
+                el['no'] = no++;
+
+            })
+
+            console.log(data)
+            this.setState({
+                data: data,
+                loading: false,
             })
         }).catch((rejects) => {
             console.log(rejects);
@@ -254,6 +335,8 @@ class DetailProjek extends React.Component<any, any> {
         this.getDetail();
         this.getCost();
         this.getProgress();
+        this.getStokOut();
+        this.getPekerjaanLain();
     }
 
     handleEditProject(data_project) {
@@ -316,6 +399,54 @@ class DetailProjek extends React.Component<any, any> {
         })
     }
 
+    handleTambahBahan(data) {
+        const payload = {
+            id_stok_gudang: data.id_stok_gudang,
+            id_material: data.id_material,
+            id_project: this.state.data_project.id_project,
+            stok_out: data.qty,
+            keterangan: "",
+            id_user: JSON.parse(localStorage.getItem("user-cozyproject")).id_user,
+        }
+
+        console.log(payload)
+
+        Stok.add(payload, this.state.data_auth).then((result) => {
+            console.log(result);
+            this.closeBahan();
+            this.getStokOut();
+            this.getCost();
+            this.getDetail();
+            toast.success("Kebutuhan Bahan berhasil ditambah");
+        }).catch((rejects) => {
+            console.log(rejects);
+            toast.error("Terjadi Kesalahan");
+        });
+    }
+
+    handleSimpanPekerjaanLain(data) {
+        const payload = {
+            id_project: this.state.data_project.id_project,
+            nama_pekerjaan: data.nama_pekerjaan,
+            desc: data.desc,
+            harga: System.convertInt(data.harga),
+            id_user: data.id_user
+        }
+
+        PekerjaanLain.add(payload, this.state.data_auth).then((result) => {
+            console.log(result);
+            this.closePekerjaan();
+            this.getStokOut();
+            this.getCost();
+            this.getDetail();
+            this.getPekerjaanLain();
+            toast.success("Pekerjaan Lain berhasil ditambah");
+        }).catch((rejects) => {
+            console.log(rejects);
+            toast.error("Terjadi Kesalahan");
+        });
+    }
+
     render(): React.ReactNode {
         return (
             <>
@@ -334,6 +465,7 @@ class DetailProjek extends React.Component<any, any> {
                 />
                 <Sidebar />
                 <Navbar title="Detail Projek" />
+                <LoadingFull display={this.state.loading} />
                 <div className="main">
                     <div className="main-content project">
                         <div className='row'>
@@ -358,6 +490,11 @@ class DetailProjek extends React.Component<any, any> {
                                                 <small>Kategori Projek</small>
                                                 <h3>{this.state.data_project.kategori_project}</h3>
                                             </div>
+                                        </div>
+
+                                        <div className='mt-3'>
+                                            <small>Deskripsi Projek</small>
+                                            <p className='mt-1 text-black'>{this.state.data_project.desc}</p>
                                         </div>
                                     </div>
                                     <div className='text-end'>
@@ -497,10 +634,10 @@ class DetailProjek extends React.Component<any, any> {
                     </div>
                 </div>
 
-                <ModalAddBahan isOpen={this.state.isOpenBahan} closeModal={this.closeBahan} />
+                <ModalAddBahan handleTambahBahan={this.handleTambahBahan} isOpen={this.state.isOpenBahan} closeModal={this.closeBahan} id_project={this.state.data_project.id_project} />
                 <ModalAddProgress handleSimpanProgress={this.handleSimpanProgress} status={this.state.loading_modal} isOpen={this.state.isOpenProgress} closeModal={this.closeProgress} />
                 <ModalEditInformasi isOpen={this.state.isOpenInformasi} closeModal={this.closeInformasi} data_project={this.state.data_project} handleEditProject={this.handleEditProject} />
-                <ModalAddPekerjaan isOpen={this.state.isOpenPekerjaan} closeModal={this.closePekerjaan} />
+                <ModalAddPekerjaan handleSimpanPekerjaanLain={this.handleSimpanPekerjaanLain} isOpen={this.state.isOpenPekerjaan} closeModal={this.closePekerjaan} />
                 <ModalEditCost isOpen={this.state.isOpenCost} handleEditCost={this.handleEditCost} closeModal={this.closeCost} cost_data={this.state.cost_data} title={this.state.data_cost} />
             </>
         )
