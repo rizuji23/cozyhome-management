@@ -5,6 +5,12 @@ import HelmetTitle from './etc/HelmetTitle';
 import Sidebar from './etc/Sidebar';
 import Navbar from './etc/Navbar';
 import { Tab, Tabs } from 'react-bootstrap';
+import { withRouter } from './etc/withRouter';
+import CustomerModule from '../module/CustomerModule';
+import moment from 'moment'
+import LoadingFull from './etc/LoadingFull';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.min.css';
 
 class DetailCustomer extends React.Component<any, any> {
     constructor(props) {
@@ -17,7 +23,7 @@ class DetailCustomer extends React.Component<any, any> {
                 },
                 {
                     name: "Nama Projek",
-                    selector: row => row.nama_projek,
+                    selector: row => row.nama_project,
                 },
                 {
                     name: "Customer",
@@ -40,25 +46,57 @@ class DetailCustomer extends React.Component<any, any> {
                     selector: row => row.created_at
                 }
             ],
-            data: [
-                {
-                    no: 1,
-                    nama_projek: <><Link to="/detail_projek">Summarecon</Link></>,
-                    nama_customer: "Aye Shabira",
-                    jumlah_volumn: "20 m2",
-                    total_cost: "20.000.000",
-                    status: <span className="badge text-bg-primary">On Progress</span>,
-                    created_at: "26-02-2023"
-                }
-            ]
+            data: [],
+            data_auth: localStorage.getItem("user-cozyproject"),
+            detail_customer: {},
+            loading: true,
         }
+
+        console.log(this.props);
+        this.getDetail = this.getDetail.bind(this);
+    }
+
+    getDetail() {
+        CustomerModule.getDetail({ id_customer: this.props.params.id }, this.state.data_auth).then((result) => {
+            console.log(result);
+            let no = 1;
+            result.data.data.project.map(el => {
+                el['no'] = no++;
+                el['nama_project'] = <><Link to={`/detail_projek/${el.id_project}`}>{el.nama_project}</Link></>
+                el['created_at'] = moment(el.created_at, "YYYY-MM-DD").format("DD-MM-YYYY")
+            });
+            this.setState({
+                data: result.data.data.project,
+                detail_customer: result.data.data.customer,
+                loading: false,
+            })
+        }).catch((rejects) => {
+            console.log(rejects);
+            toast.error("Terjadi Kesalahan");
+        })
+    }
+
+    componentDidMount(): void {
+        this.getDetail();
     }
 
     render(): React.ReactNode {
         return (
             <>
+                <LoadingFull display={this.state.loading} />
                 <HelmetTitle title="Detail Customer" />
-
+                <ToastContainer
+                    position="top-right"
+                    autoClose={5000}
+                    hideProgressBar={false}
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover
+                    theme="light"
+                />
                 <Sidebar />
                 <Navbar title="Detail Customer" />
                 <div className="main">
@@ -80,23 +118,23 @@ class DetailCustomer extends React.Component<any, any> {
                                         <ul className="list-group mt-3">
                                             <li className="list-group-item">
                                                 <small><b>Nama</b></small><br />
-                                                <span>Aye Shabira</span>
+                                                <span>{this.state.detail_customer.nama_customer}</span>
                                             </li>
                                             <li className="list-group-item">
                                                 <small><b>Nama Perusahaan</b></small><br />
-                                                <span>PT Para Pencari Cinta.</span>
+                                                <span>{this.state.detail_customer.nama_perusahaan}</span>
                                             </li>
                                             <li className="list-group-item">
                                                 <small><b>Email</b></small><br />
-                                                <span>aye@aye.com</span>
+                                                <span>{this.state.detail_customer.email}</span>
                                             </li>
                                             <li className="list-group-item">
                                                 <small><b>No Telp</b></small><br />
-                                                <span>021321212332</span>
+                                                <span>{this.state.detail_customer.no_telp}</span>
                                             </li>
                                             <li className="list-group-item">
                                                 <small><b>Alamat</b></small><br />
-                                                <span>Teuing dimana eung.</span>
+                                                <span>{this.state.detail_customer.alamat}</span>
                                             </li>
                                         </ul>
                                     </div>
@@ -121,9 +159,7 @@ class DetailCustomer extends React.Component<any, any> {
                                                 </ul>
                                             </div>
                                         </div>
-                                        <div className='ms-3'>
-                                            <Link to={"/tambah_projek"} className='btn btn-primary btn-sm'>Tambah Projek Baru</Link>
-                                        </div>
+
                                     </div>
                                     <div className="box-body pb-0 table-responsive activity mt-18">
                                         <DataTable columns={this.state.columns} data={this.state.data} pagination />
@@ -138,4 +174,4 @@ class DetailCustomer extends React.Component<any, any> {
     }
 }
 
-export default DetailCustomer;
+export default withRouter(DetailCustomer);

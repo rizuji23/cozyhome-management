@@ -4,6 +4,8 @@ import Sidebar from './etc/Sidebar';
 import Navbar from './etc/Navbar';
 import DataTable, { createTheme } from 'react-data-table-component';
 import { Link } from 'react-router-dom';
+import ProjectModule from '../module/ProjectModule';
+import moment from 'moment';
 
 
 class Projek extends React.Component<any, any> {
@@ -17,7 +19,7 @@ class Projek extends React.Component<any, any> {
                 },
                 {
                     name: "Nama Projek",
-                    selector: row => row.nama_projek,
+                    selector: row => row.nama_project,
                 },
                 {
                     name: "Customer",
@@ -41,17 +43,40 @@ class Projek extends React.Component<any, any> {
                 }
             ],
             data: [
-                {
-                    no: 1,
-                    nama_projek: <><Link to="/detail_projek">Summarecon</Link></>,
-                    nama_customer: "Aye Shabira",
-                    jumlah_volumn: "20 m2",
-                    total_cost: "20.000.000",
-                    status: <span className="badge text-bg-primary">On Progress</span>,
-                    created_at: "26-02-2023"
-                }
-            ]
-        }
+
+            ],
+            data_auth: localStorage.getItem("user-cozyproject"),
+            loading: true,
+        };
+
+        this.getProject = this.getProject.bind(this);
+    }
+
+    getProject() {
+        ProjectModule.get(this.state.data_auth).then((result: any) => {
+            console.log(result.data.data.project);
+            let no = 1;
+            result.data.data.project.map(el => {
+                el['no'] = no++;
+                el['nama_project'] = <><Link to={`/detail_projek/${el.id_project}`}>{el.nama_project}</Link></>
+                el['created_at'] = moment(el.created_at, "YYYY-MM-DD").format("DD-MM-YYYY")
+            });
+
+            this.setState({
+                data: result.data.data.project,
+                loading: false
+            })
+        }).catch((reject) => {
+            console.log(reject)
+        })
+    }
+
+    componentDidMount(): void {
+        this.getProject();
+    }
+
+    handleClickRow(e) {
+        console.log(e)
     }
 
     render(): React.ReactNode {
@@ -85,7 +110,7 @@ class Projek extends React.Component<any, any> {
                                 </div>
                             </div>
                             <div className="box-body pb-0 table-responsive activity mt-18">
-                                <DataTable columns={this.state.columns} data={this.state.data} pagination />
+                                <DataTable columns={this.state.columns} data={this.state.data} pagination progressPending={this.state.loading} onRowClicked={this.handleClickRow} />
                             </div>
                         </div>
                     </div>

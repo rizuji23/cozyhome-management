@@ -35,12 +35,12 @@ class App extends React.Component<any, any> {
 
         <Route path='/projek' element={<Projek />}></Route>
         <Route path='/tambah_projek' element={<AddProjek />}></Route>
-        <Route path='/detail_projek' element={<DetailProjek />}></Route>
+        <Route path='/detail_projek/:id' element={<DetailProjek />}></Route>
         <Route path='/detail_progress' element={<DetailProgress />}></Route>
 
         <Route path='/customer' element={<Customer />}></Route>
         <Route path='/tambah_customer' element={<AddCustomer />}></Route>
-        <Route path='/detail_customer' element={<DetailCustomer />}></Route>
+        <Route path='/detail_customer/:id' element={<DetailCustomer />}></Route>
 
         <Route path='/stok_gudang' element={<StokGudang />}></Route>
 

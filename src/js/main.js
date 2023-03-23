@@ -30,8 +30,8 @@ function getCookie(cname) {
 }
 
 function loadTheme() {
-  var theme = getCookie(themeCookieName);
-  body.classList.add(theme === "" ? themeLight : theme);
+  // var theme = getCookie(themeCookieName);
+  body.classList.add(themeLight);
 }
 
 function switchTheme() {

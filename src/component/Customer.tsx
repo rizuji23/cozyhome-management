@@ -4,6 +4,10 @@ import Sidebar from './etc/Sidebar';
 import Navbar from './etc/Navbar';
 import DataTable from 'react-data-table-component';
 import { Link } from 'react-router-dom';
+import CustomerModule from '../module/CustomerModule';
+import moment from 'moment-timezone';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.min.css';
 
 class Customer extends React.Component<any, any> {
     constructor(props) {
@@ -31,23 +35,55 @@ class Customer extends React.Component<any, any> {
                     selector: row => row.created_at,
                 }
             ],
-            data: [
-                {
-                    no: 1,
-                    nama_customer: <Link to={"/detail_customer"}>Aye Shabira</Link>,
-                    no_telp: "089657581114",
-                    created_at: "26-02-2023",
-                    nama_perusahaan: "PT Pencari Cinta Sejati"
-                }
-            ]
+            data: [],
+            data_auth: localStorage.getItem("user-cozyproject"),
+            loading: true,
         }
+
+        this.getCustomer = this.getCustomer.bind(this);
+    }
+
+    getCustomer() {
+        CustomerModule.get(this.state.data_auth).then((result) => {
+            console.log(result);
+            let no = 1;
+            result.data.data.customer.map(el => {
+                el['no'] = no++;
+                el['nama_customer'] = <><Link to={`/detail_customer/${el.id_customer
+                    }`}>{el.nama_customer}</Link></>;
+                el['created_at'] = moment(el.created_at, "YYYY-MM-DD").format("DD-MM-YYYY");
+            });
+
+            this.setState({
+                data: result.data.data.customer,
+                loading: false,
+            })
+        }).catch((rejects) => {
+            console.log(rejects);
+            toast.error("Terjadi Kesalahan");
+        })
+    }
+
+    componentDidMount(): void {
+        this.getCustomer();
     }
 
     render(): React.ReactNode {
         return (
             <>
                 <HelmetTitle title="List Customer" />
-
+                <ToastContainer
+                    position="top-right"
+                    autoClose={5000}
+                    hideProgressBar={false}
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover
+                    theme="light"
+                />
                 <Sidebar />
                 <Navbar title="List Customer" />
                 <div className="main">
@@ -74,7 +110,7 @@ class Customer extends React.Component<any, any> {
                                 </div>
                             </div>
                             <div className='box-body'>
-                                <DataTable columns={this.state.column} data={this.state.data} pagination />
+                                <DataTable columns={this.state.column} data={this.state.data} pagination progressPending={this.state.loading} />
                             </div>
                         </div>
                     </div>

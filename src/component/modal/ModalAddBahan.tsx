@@ -9,7 +9,7 @@ class ModalAddBahan extends React.Component<any, any> {
         this.state = {
             data: [
                 {
-                    name: "Triplek",
+                    name: "Triplek (Stok: 5 pcs)",
                     value: "Triplek"
                 }
             ]

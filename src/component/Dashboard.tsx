@@ -154,7 +154,7 @@ class Dashboard extends React.Component<any, any> {
 
                         <div className='box mt-3'>
                             <div className="box-header">
-                                <h3 className="mt-9 fs-22">Keuangan Statistik</h3>
+                                <h3 className="mt-9 fs-22">Cash Flow</h3>
                             </div>
 
                             <div className='box-body'>
