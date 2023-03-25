@@ -3,10 +3,11 @@ import HelmetTitle from './etc/HelmetTitle';
 import Sidebar from './etc/Sidebar';
 import Navbar from './etc/Navbar';
 import DataTable, { createTheme } from 'react-data-table-component';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import ProjectModule from '../module/ProjectModule';
 import moment from 'moment';
 import System from '../module/System';
+import { Dropdown, DropdownButton } from 'react-bootstrap';
 
 
 class Projek extends React.Component<any, any> {
@@ -17,40 +18,50 @@ class Projek extends React.Component<any, any> {
                 {
                     name: "No",
                     selector: row => row.no,
+                    sortable: true,
+                    width: "70px"
                 },
                 {
                     name: "Nama Projek",
                     selector: row => row.nama_project,
+                    sortable: true,
                 },
                 {
                     name: "Customer",
-                    selector: row => row.nama_customer
+                    selector: row => row.nama_customer,
+                    sortable: true,
                 },
                 {
                     name: "Jumlah Volumn",
                     selector: row => row.jumlah_volumn,
+                    sortable: true,
                 },
                 {
                     name: "Total Cost",
                     selector: row => row.total_cost,
+                    sortable: true,
                 },
                 {
                     name: "Status",
-                    selector: row => row.status
+                    selector: row => row.status,
+                    sortable: true,
                 },
                 {
                     name: "Tanggal",
-                    selector: row => row.created_at
+                    selector: row => row.created_at,
+                    sortable: true,
                 }
             ],
-            data: [
-
-            ],
+            data: [],
             data_auth: localStorage.getItem("user-cozyproject"),
             loading: true,
+            navigation: false,
+            search: "",
         };
 
         this.getProject = this.getProject.bind(this);
+        this.handleClickRow = this.handleClickRow.bind(this);
+        this.handleSearch = this.handleSearch.bind(this);
     }
 
     getProject() {
@@ -59,6 +70,8 @@ class Projek extends React.Component<any, any> {
             let no = 1;
             result.data.data.project.map(el => {
                 el['no'] = no++;
+                el['nama_project_2'] = el.nama_project
+
                 el['nama_project'] = <><Link to={`/detail_projek/${el.id_project}`}>{el.nama_project}</Link></>
                 el['created_at'] = moment(el.created_at, "YYYY-MM-DD").format("DD-MM-YYYY");
                 el['total_cost'] = System.convertRupiah(el.total_cost);
@@ -78,14 +91,23 @@ class Projek extends React.Component<any, any> {
     }
 
     handleClickRow(e) {
-        console.log(e)
+        console.log(e);
+        this.setState({
+            navigation: <Navigate to={`/detail_projek/${e.id_project}`} />
+        })
+    }
+
+    handleSearch(e) {
+        this.setState({
+            search: e.target.value
+        })
     }
 
     render(): React.ReactNode {
         return (
             <>
                 <HelmetTitle title="List Projek" />
-
+                {this.state.navigation}
                 <Sidebar />
                 <Navbar title="List Projek" />
                 <div className="main">
@@ -96,23 +118,21 @@ class Projek extends React.Component<any, any> {
                                     <h4 className="card-title mb-0 fs-22">Projek</h4>
                                 </div>
                                 <div className='me-3'>
-                                    <input type="text" className='form-control' placeholder='Cari Projek' />
+                                    <input type="text" onChange={this.handleSearch} className='form-control' placeholder='Cari Nama Projek' />
                                 </div>
-                                <div className="card-options pr-3">
-                                    <div className="dropdown"> <a href="#" className="btn ripple btn-outline-primary dropdown-toggle fs-14" data-bs-toggle="dropdown" aria-expanded="false"> See All <i className="feather feather-chevron-down"></i> </a>
-                                        <ul className="dropdown-menu dropdown-menu-end" role="menu">
-                                            <li><a href="#">Monthly</a></li>
-                                            <li><a href="#">Yearly</a></li>
-                                            <li><a href="#">Weekly</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div className='ms-3'>
+                                <div className=''>
                                     <Link to={"/tambah_projek"} className='btn btn-primary btn-sm'>Tambah Projek Baru</Link>
                                 </div>
                             </div>
                             <div className="box-body pb-0 table-responsive activity mt-18">
-                                <DataTable columns={this.state.columns} data={this.state.data} pagination progressPending={this.state.loading} onRowClicked={this.handleClickRow} />
+                                <DataTable columns={this.state.columns} data={this.state.data.filter((data) => {
+                                    console.log(data)
+                                    if (this.state.search === "") {
+                                        return data;
+                                    } else if (data.nama_project_2.toLowerCase().includes(this.state.search.toLowerCase())) {
+                                        return data;
+                                    }
+                                })} pagination progressPending={this.state.loading} onRowClicked={this.handleClickRow} />
                             </div>
                         </div>
                     </div>

@@ -5,6 +5,7 @@ import 'react-select-search/style.css'
 import Stok from '../../module/Stok';
 import { rejects } from 'assert';
 import System from '../../module/System';
+import { toast } from 'react-toastify';
 
 class ModalAddBahan extends React.Component<any, any> {
     constructor(props) {
@@ -18,6 +19,7 @@ class ModalAddBahan extends React.Component<any, any> {
             disabled: true,
             id_material: "",
             id_stok_gudang: "",
+            stok: 0,
         }
 
         this.getStok = this.getStok.bind(this);
@@ -43,7 +45,7 @@ class ModalAddBahan extends React.Component<any, any> {
             const data = result.data.data.stok.map(el => {
                 return {
                     name: `${el.nama_material} (${el.stok} pcs)`,
-                    value: JSON.stringify({ id_material: el.id_material_2, id_stok_gudang: el.id_stok_gudang, id_project: this.props.id_project })
+                    value: JSON.stringify({ id_material: el.id_material_2, id_stok_gudang: el.id_stok_gudang, id_project: this.props.id_project, stok: el.stok })
                 }
             });
             console.log(data);
@@ -74,7 +76,8 @@ class ModalAddBahan extends React.Component<any, any> {
             this.setState({
                 harga: result.data.data.material.harga,
                 id_material: result.data.data.material.id_material,
-                id_stok_gudang: data.id_stok_gudang
+                id_stok_gudang: data.id_stok_gudang,
+                stok: data.stok
             }, () => {
                 this.handleQty({ target: { value: this.state.qty } });
             });
@@ -85,7 +88,6 @@ class ModalAddBahan extends React.Component<any, any> {
     }
 
     handleQty(e) {
-        console.log(e.target.value)
         const total_all = parseInt(this.state.harga) * parseInt(e.target.value);
         console.log(total_all)
         this.setState({
@@ -93,14 +95,20 @@ class ModalAddBahan extends React.Component<any, any> {
             total_all: total_all,
         });
 
-        if (e.target.value.length === 0 || e.target.value === "0") {
+        if (e.target.value.length === 0) {
             this.setState({
                 disabled: true,
             })
-        } else {
+        } else if (e.target.value >= this.state.stok + 1) {
+            this.setState({
+                disabled: true,
+            });
+
+            toast.error("Stok melebihi batas");
+        } else if (e.target.value !== "0" && this.state.harga !== 0) {
             this.setState({
                 disabled: false,
-            })
+            });
         }
     }
 

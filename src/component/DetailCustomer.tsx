@@ -1,6 +1,6 @@
 import React from 'react';
 import DataTable from 'react-data-table-component';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import HelmetTitle from './etc/HelmetTitle';
 import Sidebar from './etc/Sidebar';
 import Navbar from './etc/Navbar';
@@ -21,40 +21,59 @@ class DetailCustomer extends React.Component<any, any> {
                 {
                     name: "No",
                     selector: row => row.no,
+                    sortable: true,
+                    width: "70px"
                 },
                 {
                     name: "Nama Projek",
                     selector: row => row.nama_project,
+                    sortable: true,
                 },
                 {
                     name: "Customer",
-                    selector: row => row.nama_customer
+                    selector: row => row.nama_customer,
+                    sortable: true,
                 },
                 {
                     name: "Jumlah Volumn",
                     selector: row => row.jumlah_volumn,
+                    sortable: true,
                 },
                 {
                     name: "Total Cost",
                     selector: row => row.total_cost,
+                    sortable: true,
                 },
                 {
                     name: "Status",
-                    selector: row => row.status
+                    selector: row => row.status,
+                    sortable: true,
                 },
                 {
                     name: "Tanggal",
-                    selector: row => row.created_at
+                    selector: row => row.created_at,
+                    sortable: true,
                 }
             ],
             data: [],
             data_auth: localStorage.getItem("user-cozyproject"),
             detail_customer: {},
             loading: true,
+            navigation: false,
+            search: "",
         }
 
         console.log(this.props);
         this.getDetail = this.getDetail.bind(this);
+        this.handleClickRow = this.handleClickRow.bind(this);
+        this.handleSearch = this.handleSearch.bind(this);
+    }
+
+    handleClickRow(e) {
+        console.log(e);
+        this.setState({
+            navigation: <Navigate to={`/detail_projek/${e.id_project}`} />
+        })
     }
 
     getDetail() {
@@ -63,6 +82,7 @@ class DetailCustomer extends React.Component<any, any> {
             let no = 1;
             result.data.data.project.map(el => {
                 el['no'] = no++;
+                el['nama_project_2'] = el.nama_project
                 el['nama_project'] = <><Link to={`/detail_projek/${el.id_project}`}>{el.nama_project}</Link></>
                 el['created_at'] = moment(el.created_at, "YYYY-MM-DD").format("DD-MM-YYYY")
                 el['total_cost'] = System.convertRupiah(el.total_cost);
@@ -82,6 +102,12 @@ class DetailCustomer extends React.Component<any, any> {
         this.getDetail();
     }
 
+    handleSearch(e) {
+        this.setState({
+            search: e.target.value,
+        })
+    }
+
     render(): React.ReactNode {
         return (
             <>
@@ -99,6 +125,8 @@ class DetailCustomer extends React.Component<any, any> {
                     pauseOnHover
                     theme="light"
                 />
+                {this.state.navigation}
+
                 <Sidebar />
                 <Navbar title="Detail Customer" />
                 <div className="main">
@@ -150,21 +178,19 @@ class DetailCustomer extends React.Component<any, any> {
                                             <h4 className="card-title mb-0 fs-22">List Projek</h4>
                                         </div>
                                         <div className='me-3'>
-                                            <input type="text" className='form-control' placeholder='Cari Projek' />
-                                        </div>
-                                        <div className="card-options pr-3">
-                                            <div className="dropdown"> <a href="#" className="btn ripple btn-outline-primary dropdown-toggle fs-14" data-bs-toggle="dropdown" aria-expanded="false"> See All <i className="feather feather-chevron-down"></i> </a>
-                                                <ul className="dropdown-menu dropdown-menu-end" role="menu">
-                                                    <li><a href="#">Monthly</a></li>
-                                                    <li><a href="#">Yearly</a></li>
-                                                    <li><a href="#">Weekly</a></li>
-                                                </ul>
-                                            </div>
+                                            <input type="text" onChange={this.handleSearch} className='form-control' placeholder='Cari Nama Projek' />
                                         </div>
 
                                     </div>
                                     <div className="box-body pb-0 table-responsive activity mt-18">
-                                        <DataTable columns={this.state.columns} data={this.state.data} pagination />
+                                        <DataTable onRowClicked={this.handleClickRow} columns={this.state.columns} data={this.state.data.filter((data) => {
+                                            console.log(data)
+                                            if (this.state.search === "") {
+                                                return data;
+                                            } else if (data.nama_project_2.toLowerCase().includes(this.state.search.toLowerCase())) {
+                                                return data;
+                                            }
+                                        })} pagination />
                                     </div>
                                 </div>
                             </Tab>

@@ -3,6 +3,10 @@ import React from "react";
 class Navbar extends React.Component<any, any> {
     constructor(props) {
         super(props);
+        this.state = {
+            name: JSON.parse(localStorage.getItem("user-cozyproject")).name,
+            role: JSON.parse(localStorage.getItem("user-cozyproject")).role,
+        }
     }
 
     render(): React.ReactNode {
@@ -25,8 +29,8 @@ class Navbar extends React.Component<any, any> {
                                     alt="Header Avatar" />
                                 <span className="pulse-css"></span>
                                 <span className="info d-xl-inline-block  color-span">
-                                    <span className="d-block fs-20 font-w600">Aye Shabira</span>
-                                    <span className="d-block mt-7" >Admin</span>
+                                    <span className="d-block fs-20 font-w600">{this.state.name}</span>
+                                    <span className="d-block mt-7" >{this.state.role}</span>
                                 </span>
                             </button>
 

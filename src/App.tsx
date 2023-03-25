@@ -20,6 +20,8 @@ import { withRouter } from './component/etc/withRouter';
 import StokPrint from './component/export/StokPrint';
 import PekerjaanLainPrint from './component/export/PekerjaanLainPrint';
 import ProjectPrint from './component/export/ProjectPrint';
+import Logout from './component/etc/Logout';
+import AuthCheck from './component/AuthCheck';
 
 class App extends React.Component<any, any> {
   constructor(props) {
@@ -32,7 +34,7 @@ class App extends React.Component<any, any> {
 
   componentDidUpdate(prevProps: Readonly<any>, prevState: Readonly<any>, snapshot?: any): void {
     if (prevProps.location.pathname !== this.props.location.pathname) {
-      sidebar()
+      sidebar();
     }
   }
 
@@ -40,26 +42,28 @@ class App extends React.Component<any, any> {
     return (
       <Routes>
         <Route path="/" element={<Login />}></Route>
-        <Route path="/dashboard" element={<Dashboard />}></Route>
+        <Route element={<AuthCheck />}>
+          <Route path="/dashboard" element={<Dashboard />}></Route>
 
 
-        <Route path='/projek' element={<Projek />}></Route>
-        <Route path='/tambah_projek' element={<AddProjek />}></Route>
-        <Route path='/detail_projek/:id' element={<DetailProjek />}></Route>
-        <Route path='/detail_progress/:id' element={<DetailProgress />}></Route>
+          <Route path='/projek' element={<Projek />}></Route>
+          <Route path='/tambah_projek' element={<AddProjek />}></Route>
+          <Route path='/detail_projek/:id' element={<DetailProjek />}></Route>
+          <Route path='/detail_progress/:id' element={<DetailProgress />}></Route>
 
-        <Route path='/customer' element={<Customer />}></Route>
-        <Route path='/tambah_customer' element={<AddCustomer />}></Route>
-        <Route path='/detail_customer/:id' element={<DetailCustomer />}></Route>
+          <Route path='/customer' element={<Customer />}></Route>
+          <Route path='/tambah_customer' element={<AddCustomer />}></Route>
+          <Route path='/detail_customer/:id' element={<DetailCustomer />}></Route>
 
-        <Route path='/stok_gudang' element={<StokGudang />}></Route>
+          <Route path='/stok_gudang' element={<StokGudang />}></Route>
 
-        <Route path='/print_stok/:id' element={<StokPrint />}></Route>
-        <Route path='/print_pekerjaan/:id' element={<PekerjaanLainPrint />}></Route>
-        <Route path='/print_project/:id' element={<ProjectPrint />}></Route>
+          <Route path='/print_stok/:id' element={<StokPrint />}></Route>
+          <Route path='/print_pekerjaan/:id' element={<PekerjaanLainPrint />}></Route>
+          <Route path='/print_project/:id' element={<ProjectPrint />}></Route>
 
-        <Route path='/pengaturan' element={<Pengaturan />}></Route>
-
+          <Route path='/pengaturan' element={<Pengaturan />}></Route>
+        </Route>
+        <Route path='/logout' element={<Logout />}></Route>
       </Routes>
     )
   }

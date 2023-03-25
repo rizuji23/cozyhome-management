@@ -79,7 +79,7 @@ class Sidebar extends React.Component<any, any> {
                             </li>
 
                             <li>
-                                <Link to="/">
+                                <Link to="/logout">
                                     <i className='bx bxs-log-out-circle' ></i>
                                     <span>Logout</span>
                                 </Link>

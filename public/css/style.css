@@ -2123,7 +2123,6 @@ table td {
     padding-bottom: 7px;
     position: relative;
     flex-wrap: wrap;
-    cursor: pointer;
 }
 
 .box.card-box .icon-box:nth-child(1) {

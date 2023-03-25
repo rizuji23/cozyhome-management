@@ -5,6 +5,7 @@ import Navbar from './etc/Navbar';
 import InfoProject from './etc/InfoProject';
 import { Link } from 'react-router-dom';
 import ReactApexChart from 'react-apexcharts';
+import InfoUang from './etc/InfoUang';
 
 class Dashboard extends React.Component<any, any> {
     constructor(props) {
@@ -68,19 +69,19 @@ class Dashboard extends React.Component<any, any> {
             bar_chart: {
                 series: [{
                     name: 'Cost Material',
-                    data: [44, 55, 57, 56, 61, 58, 63, 60, 66]
+                    data: [44, 55, 57, 56, 61, 58, 63, 60, 66, 66]
                 }, {
                     name: 'Cost Produksi',
-                    data: [76, 85, 101, 98, 87, 105, 91, 114, 94]
+                    data: [76, 85, 101, 98, 87, 105, 91, 114, 94, 60, 66, 66]
                 }, {
                     name: 'Cost Design',
-                    data: [35, 41, 36, 26, 45, 48, 52, 53, 41]
+                    data: [35, 41, 36, 26, 45, 48, 52, 53, 41, 60, 66, 66]
                 }, {
                     name: 'Cost Operasional',
-                    data: [35, 41, 36, 26, 45, 48, 52, 53, 41]
+                    data: [35, 41, 36, 26, 45, 48, 52, 53, 41, 60, 66, 66]
                 }, {
                     name: 'Total Keseluruhan Cost',
-                    data: [35, 41, 36, 26, 45, 48, 52, 53, 41]
+                    data: [35, 41, 36, 26, 45, 48, 52, 53, 41, 60, 66, 66]
                 }],
                 options: {
                     chart: {
@@ -103,11 +104,11 @@ class Dashboard extends React.Component<any, any> {
                         colors: ['transparent']
                     },
                     xaxis: {
-                        categories: ['Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct'],
+                        categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
                     },
                     yaxis: {
                         title: {
-                            text: '$ (thousands)'
+                            text: 'Rp (juta)'
                         }
                     },
                     fill: {
@@ -122,8 +123,6 @@ class Dashboard extends React.Component<any, any> {
                     }
                 }
             }
-
-
         };
     }
 
@@ -151,7 +150,7 @@ class Dashboard extends React.Component<any, any> {
                                 </div>
                             </div>
                         </div>
-
+                        <InfoUang />
                         <div className='box mt-3'>
                             <div className="box-header">
                                 <h3 className="mt-9 fs-22">Cash Flow</h3>

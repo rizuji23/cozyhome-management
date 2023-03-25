@@ -6,6 +6,7 @@ import { Tab, Tabs } from "react-bootstrap";
 import DataTable from "react-data-table-component";
 import Stok from "../module/Stok";
 import moment from 'moment';
+import LoadingFull from "./etc/LoadingFull";
 
 class StokGudang extends React.Component<any, any> {
     constructor(props) {
@@ -221,7 +222,7 @@ class StokGudang extends React.Component<any, any> {
         return (
             <>
                 <HelmetTitle title="Stok Gudang" />
-
+                <LoadingFull display={this.state.loading} />
                 <Sidebar />
                 <Navbar title="Stok Gudang" />
                 <div className="main">

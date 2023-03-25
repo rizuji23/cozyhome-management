@@ -629,7 +629,7 @@ class DetailProjek extends React.Component<any, any> {
                             </div>
                         </div>
 
-                        <div className='box'>
+                        {/* <div className='box'>
                             <div className='box-body'>
                                 <div className='alert alert-danger'>
                                     <h6>Zona Berbahaya</h6>
@@ -639,7 +639,7 @@ class DetailProjek extends React.Component<any, any> {
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
 
