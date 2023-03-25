@@ -482,6 +482,10 @@ class DetailProjek extends React.Component<any, any> {
                                                     <small>Volume</small>
                                                     <h3>{this.state.data_project.jumlah_volumn} m2</h3>
                                                 </div>
+                                                <div>
+                                                    <small>Nama Customer</small>
+                                                    <h3>{this.state.data_project.nama_customer}</h3>
+                                                </div>
                                             </div>
                                             <div className='ms-5'>
                                                 <small>Timeline Projek</small>
@@ -489,6 +493,11 @@ class DetailProjek extends React.Component<any, any> {
 
                                                 <small>Kategori Projek</small>
                                                 <h3>{this.state.data_project.kategori_project}</h3>
+
+                                                <div>
+                                                    <small>Tanggal Mulai & Akhir Project</small>
+                                                    <h3>{this.state.data_project.start_date} ~ {this.state.data_project.end_date}</h3>
+                                                </div>
                                             </div>
                                         </div>
 
@@ -508,7 +517,7 @@ class DetailProjek extends React.Component<any, any> {
                                             </div>
                                             <div className='col-sm text-end'>
                                                 <button className='btn btn-primary btn-sm' onClick={this.openBahan}><i className='bx bx-plus'></i> Tambah Item</button>
-                                                <button className='btn btn-info btn-sm ms-2'>Print</button>
+                                                <Link to={`/print_stok/${this.state.data_project.id_project}`} target='_blank' className='btn btn-info btn-sm ms-2'>Print</Link>
                                             </div>
                                         </div>
                                         <DataTable columns={this.state.column} data={this.state.data} pagination />
@@ -521,7 +530,7 @@ class DetailProjek extends React.Component<any, any> {
                                             </div>
                                             <div className='col-sm text-end'>
                                                 <button className='btn btn-primary btn-sm' onClick={this.openPekerjaan}><i className='bx bx-plus'></i> Tambah Pekerjaan</button>
-                                                <button className='btn btn-info btn-sm ms-2'>Print</button>
+                                                <Link to={`/print_pekerjaan/${this.state.data_project.id_project}`} target='_blank' className='btn btn-info btn-sm ms-2'>Print</Link>
                                             </div>
                                         </div>
                                         <DataTable columns={this.state.column_lain} data={this.state.data_lain} pagination />
@@ -543,14 +552,14 @@ class DetailProjek extends React.Component<any, any> {
                                         <DataTable columns={this.state.column_progress} data={this.state.data_progress} pagination />
 
                                         <div className='d-grid mt-4'>
-                                            <Link to={'/detail_progress'} className='btn btn-primary' target="_blank">Lihat Detail Progress Projek</Link>
+                                            <Link to={`/detail_progress/${this.state.data_project.id_project}`} className='btn btn-primary' target="_blank">Lihat Detail Progress Projek</Link>
                                         </div>
                                     </div>
                                 </div>
 
 
                             </div>
-                            <div className='col-sm-4 col-md-4 col'>
+                            <div className='col-sm col-md col'>
                                 <div className='box'>
                                     <div className='box-body'>
                                         <div className='mb-4'>
@@ -613,7 +622,7 @@ class DetailProjek extends React.Component<any, any> {
                                         </div>
 
                                         <div className='mt-3 d-grid'>
-                                            <button className='btn btn-primary'>Print</button>
+                                            <Link to={`/print_project/${this.state.data_project.id_project}`} target='_blank' className='btn btn-primary'>Print</Link>
                                         </div>
                                     </div>
                                 </div>

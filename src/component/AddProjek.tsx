@@ -11,6 +11,7 @@ import LoadingButton from './etc/LoadingButton';
 import ProjectModule from '../module/ProjectModule';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
+import { Link } from 'react-router-dom';
 
 class AddProjek extends React.Component<any, any> {
     constructor(props) {
@@ -266,7 +267,7 @@ class AddProjek extends React.Component<any, any> {
                                                 {this.state.list_customer}
                                             </select>
 
-                                            <a href="/tambah_customer" className='mt-2'>Tambah Customer Baru?</a>
+                                            <Link to="/tambah_customer" className='mt-2'>Tambah Customer Baru?</Link>
                                         </div>
                                     </div>
                                     <div className="col-md-6 col-sm-12 mb-24">
@@ -335,7 +336,7 @@ class AddProjek extends React.Component<any, any> {
 
                         </div>
                         <div className="gr-btn mt-4 text-end">
-                            <a href="/projek" className="btn btn-danger btn-lg mr-15 fs-16">CLOSE</a>
+                            <Link to="/projek" className="btn btn-danger btn-lg mr-15 fs-16">CLOSE</Link>
                             <button className="btn btn-primary btn-lg fs-16" onClick={this.handleSimpan} disabled={this.state.disabled}>SIMPAN <LoadingButton show={this.state.loading} /></button>
                         </div>
                     </div>

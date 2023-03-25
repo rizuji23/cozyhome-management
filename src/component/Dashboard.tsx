@@ -142,7 +142,7 @@ class Dashboard extends React.Component<any, any> {
                             <div className='box-body'>
                                 <div className='d-flex flex-row-reverse'>
                                     <div className='text-end ms-2'>
-                                        <Link to={"/tambah_customer"} className='btn btn-primary'>Tambah Customer Baru</Link>
+                                        <Link to={"/tambah_customer"} className='btn btn-info'>Tambah Customer Baru</Link>
                                     </div>
                                     <div className='text-end'>
                                         <Link to={"/tambah_projek"} className='btn btn-primary'>Tambah Projek Baru</Link>
@@ -204,7 +204,7 @@ class Dashboard extends React.Component<any, any> {
                         </div>
 
 
-                        <div className="col mt-3">
+                        {/* <div className="col mt-3">
                             <div className="box">
                                 <div className="box-header  pt-0">
                                     <div className="me-auto">
@@ -284,7 +284,7 @@ class Dashboard extends React.Component<any, any> {
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             </>

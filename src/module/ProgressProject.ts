@@ -49,6 +49,28 @@ class ProgressProject {
             });
         });
     }
+
+    static async getDetail(data):Promise<any> {
+        return new Promise((res, rej) => {
+            axios({
+                url: "/api/v1/progress_detail/",
+                method: "GET",
+                headers: {
+                    Accept: "application/json",
+                },
+                params: data,
+            }).then((result) => {
+                console.log(result);
+                if (result.status === 200) {
+                    res({response: true, data: result.data})
+                } else {
+                    rej({response: false, data: "invalid"});
+                }
+            }).catch((reject) => {
+                rej({response: false, data: "error"});
+            });
+        });
+    }
 }
 
 export default ProgressProject;

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 class Sidebar extends React.Component<any, any> {
     constructor(props) {
@@ -10,9 +11,9 @@ class Sidebar extends React.Component<any, any> {
             <>
                 <div className="sidebar">
                     <div className="sidebar-logo">
-                        <a href="index.html">
+                        <Link to="/dashboard">
                             <img src="/images/logo.png" alt="Protend logo" />
-                        </a>
+                        </Link>
                         <div className="sidebar-close" id="sidebar-close">
                             <i className='bx bx-left-arrow-alt'></i>
                         </div>
@@ -20,68 +21,68 @@ class Sidebar extends React.Component<any, any> {
                     <div className="simlebar-sc" data-simplebar>
                         <ul className="sidebar-menu tf">
                             <li>
-                                <a href="/dashboard">
+                                <Link to="/dashboard">
                                     <i className='bx bxs-home' ></i>
                                     <span>Dashboard</span>
-                                </a>
+                                </Link>
                             </li>
                             <li className="sidebar-submenu">
-                                <a href="/projek" className="sidebar-menu-dropdown">
+                                <Link to="/projek" className="sidebar-menu-dropdown">
                                     <i className='bx bxs-bolt'></i>
                                     <span>Projek</span>
                                     <div className="dropdown-icon"><i className='bx bx-chevron-down'></i></div>
-                                </a>
+                                </Link>
                                 <ul className="sidebar-menu sidebar-menu-dropdown-content">
                                     <li>
-                                        <a href="/projek">
+                                        <Link to="/projek">
                                             List Project
-                                        </a>
+                                        </Link>
                                     </li>
                                     <li>
-                                        <a href="/tambah_projek">
+                                        <Link to="/tambah_projek">
                                             Buat Projek Baru
-                                        </a>
+                                        </Link>
                                     </li>
                                 </ul>
                             </li>
 
                             <li className="sidebar-submenu">
-                                <a href="/customer" className="sidebar-menu-dropdown">
+                                <Link to="/customer" className="sidebar-menu-dropdown">
                                     <i className='bx bxs-user'></i>
                                     <span>Customer</span>
                                     <div className="dropdown-icon"><i className='bx bx-chevron-down'></i></div>
-                                </a>
+                                </Link>
                                 <ul className="sidebar-menu sidebar-menu-dropdown-content">
                                     <li>
-                                        <a href="/customer">
+                                        <Link to="/customer">
                                             List Customer
-                                        </a>
+                                        </Link>
                                     </li>
                                     <li>
-                                        <a href="/tambah_customer">
+                                        <Link to="/tambah_customer">
                                             Tambah Customer
-                                        </a>
+                                        </Link>
                                     </li>
                                 </ul>
                             </li>
                             <li>
-                                <a href="/stok_gudang">
+                                <Link to="/stok_gudang">
                                     <i className='bx bxs-box'></i>
                                     <span>Stok Gudang</span>
-                                </a>
+                                </Link>
                             </li>
                             <li>
-                                <a href="/pengaturan">
+                                <Link to="/pengaturan">
                                     <i className='bx bxs-cog'></i>
                                     <span>Pengaturan</span>
-                                </a>
+                                </Link>
                             </li>
 
                             <li>
-                                <a href="/">
+                                <Link to="/">
                                     <i className='bx bxs-log-out-circle' ></i>
                                     <span>Logout</span>
-                                </a>
+                                </Link>
                             </li>
                         </ul>
                     </div>

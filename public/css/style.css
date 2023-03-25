@@ -1803,7 +1803,7 @@ button#page-header-user-dropdown {
 }
 
 .sidebar-expand .main {
-    padding-left: 430px;
+    /* padding-left: 430px; */
     transition: 0.3s ease-in-out;
 }
 
@@ -5298,3 +5298,11 @@ body.dark .notification-list .list .no-seen {
     margin: 0px;
     padding: 0px;
   }
+
+.box-header img {
+    width: 100px;
+}
+
+.border-enable {
+    border: 1px solid rgba(0, 0, 0, 0.402) !important;
+}

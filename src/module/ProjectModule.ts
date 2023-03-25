@@ -49,6 +49,30 @@ class ProjectModule {
         });
     }
 
+    static async getPrint(data, data_auth):Promise<any> {
+        const auth:any = JSON.parse(data_auth);
+        return new Promise((res, rej) => {
+            axios({
+                url: "/api/v1/project_print/",
+                method: "GET",
+                headers: {
+                    Accept: "application/json",
+                    "Authorization": "Bearer " + auth.access
+                },
+                params: data,
+            }).then((result) => {
+                console.log(result);
+                if (result.status === 200) {
+                    res({response: true, data: result.data})
+                } else {
+                    rej({response: false, data: "invalid"});
+                }
+            }).catch((reject) => {
+                rej({response: false, data: "error"});
+            });
+        });
+    }
+
     static async add(data_project, data_auth):Promise<any> {
         const auth:any = JSON.parse(data_auth);
         return new Promise((res, rej) => {
@@ -96,6 +120,29 @@ class ProjectModule {
             }).catch((reject) => {
                 rej({response: false, data: 'error'})
             })
+        });
+    }
+
+    static async getCount(data_auth):Promise<any> {
+        const auth:any = JSON.parse(data_auth);
+        return new Promise((res, rej) => {
+            axios({
+                url: "/api/v1/project_count/",
+                method: "GET",
+                headers: {
+                    Accept: "application/json",
+                    "Authorization": "Bearer " + auth.access
+                },
+            }).then((result) => {
+                console.log(result);
+                if (result.status === 200) {
+                    res({response: true, data: result.data})
+                } else {
+                    rej({response: false, data: "invalid"});
+                }
+            }).catch((reject) => {
+                rej({response: false, data: "error"});
+            });
         });
     }
 }

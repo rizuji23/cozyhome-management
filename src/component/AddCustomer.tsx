@@ -8,6 +8,7 @@ import LoadingButton from './etc/LoadingButton';
 import CustomerModule from '../module/CustomerModule';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
+import { Link } from 'react-router-dom';
 
 
 class AddCustomer extends React.Component<any, any> {
@@ -197,7 +198,7 @@ class AddCustomer extends React.Component<any, any> {
                             </div>
                         </div>
                         <div className="gr-btn mt-4 text-end">
-                            <a href="/customer" className="btn btn-danger btn-lg mr-15 fs-16">CLOSE</a>
+                            <Link to="/customer" className="btn btn-danger btn-lg mr-15 fs-16">CLOSE</Link>
                             <Button disabled={this.state.disabled} className="btn btn-primary btn-lg fs-16" onClick={this.handleSimpan}>SIMPAN <LoadingButton show={this.state.loading} /></Button>
                         </div>
                     </div>
