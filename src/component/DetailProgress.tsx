@@ -3,7 +3,6 @@ import ListProgress from "./ListProgress";
 import HelmetTitle from "./etc/HelmetTitle";
 import { withRouter } from "./etc/withRouter";
 import ProgressProject from "../module/ProgressProject";
-import { rejects } from "assert";
 import moment from 'moment';
 
 class DetailProgress extends React.Component<any, any> {

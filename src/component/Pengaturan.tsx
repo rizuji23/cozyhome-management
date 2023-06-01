@@ -136,11 +136,11 @@ class Pengaturan extends React.Component<any, any> {
             }, () => {
                 localStorage.setItem("user-cozyproject", JSON.stringify({ "refresh": "", "access": "", "name": "", "role": 123123, "username": "", "id_user": 123123 }))
             });
-            toast.success("Password berhasil diganti");
+            toast.success("Password berhasil diubah");
             this.clearState();
         }).catch((reject) => {
             console.log(reject);
-            toast.error("Password gagal diganti");
+            toast.error("Password gagal diubah");
             this.setState({
                 disabled: true,
                 loading: false,

@@ -93,6 +93,10 @@ class StokGudang extends React.Component<any, any> {
                         selector: row => row.stok_out,
                     },
                     {
+                        name: "Projek",
+                        selector: row => row.nama_project,
+                    },
+                    {
                         name: "Tanggal",
                         selector: row => row.created_at,
                     }

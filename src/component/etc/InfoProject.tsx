@@ -1,6 +1,5 @@
 import React from "react";
 import ProjectModule from "../../module/ProjectModule";
-import { rejects } from "assert";
 
 class InfoProject extends React.Component<any, any> {
     constructor(props) {
