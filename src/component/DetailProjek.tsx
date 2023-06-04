@@ -581,7 +581,7 @@ class DetailProjek extends React.Component<any, any> {
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className='mb-4'>
+                                        {/* <div className='mb-4'>
                                             <p className='mb-1 text-black'>Cost Design</p>
                                             <div className='d-flex'>
                                                 <div className='me-3'>
@@ -591,7 +591,7 @@ class DetailProjek extends React.Component<any, any> {
                                                     <button className='btn btn-success btn-sm' onClick={() => this.openCost("Cost Design")}><i className='bx bxs-edit' ></i></button>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> */}
                                         <div className='mb-4'>
                                             <p className='mb-1 text-black'>Cost Operasional</p>
                                             <div className='d-flex'>

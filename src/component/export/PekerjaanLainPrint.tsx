@@ -80,7 +80,7 @@ class PekerjaanLainPrint extends React.Component<any, any> {
                             </div>
                             <div className="ms-5">
                                 <h2>Laporan Pekerjaan Lain</h2>
-                                <p className="text-black mb-0">Nama Project: <b>{this.state.data_project.nama_project}</b> <br />ID Project: <b>#{this.state.data_project.id_project}</b></p>
+                                <p className="text-black mb-0">Nama Project: <b>{this.state.data_project.nama_project}</b> <br /> Nama Customer: <b>{this.state.data_project.nama_customer}</b> <br />ID Project: <b>#{this.state.data_project.id_project}</b></p>
                                 <p className="text-black">Tanggal Print: <b>{this.state.print_date}</b></p>
                             </div>
                         </div>

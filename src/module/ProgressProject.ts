@@ -2,16 +2,23 @@ import axios from "./axios";
 
 class ProgressProject {
     static async add(data_project, data_auth, id):Promise<any> {
+        const formData = new FormData();
+        formData.append('nama_progress', data_project.nama_progress)
+        formData.append('status', data_project.status)
+        formData.append('desc', data_project.desc)
+        formData.append('percentage', data_project.percentage)
+        formData.append('id_user', data_project.id_user)
+        formData.append('foto', data_project.foto[0])
         const auth:any = JSON.parse(data_auth);
         return new Promise((res, rej) => {
             axios({
                 url: '/api/v1/progress/',
                 method: 'POST',
                 headers: {
-                    Accept: 'application/json',
+                    'Content-Type':  `multipart/form-data;`,
                     'Authorization': 'Bearer ' + auth.access
                 },
-                data: data_project,
+                data: formData,
                 params: {id: id}
             }).then((result) => {
                 console.log(result);

@@ -1,6 +1,10 @@
 import React from "react";
+type buttonType = {
+    show: boolean
+}
 
-class LoadingButton extends React.Component<any, any> {
+
+class LoadingButton extends React.Component<buttonType, any> {
     constructor(props) {
         super(props);
     }

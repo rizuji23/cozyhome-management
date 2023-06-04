@@ -61,10 +61,18 @@ class Pengaturan extends React.Component<any, any> {
                 old_password: "",
                 new_password: "",
             },
+            info: {
+                img: "",
+                first_name: "",
+                last_name: "",
+                email: "",
+            },
             disabled: true,
             loading: false,
             data_auth: localStorage.getItem("user-cozyproject"),
             navigation: false,
+            img: "/img_user/profile.png",
+            change_profile: false,
         }
 
         this.openUser = this.openUser.bind(this);
@@ -74,6 +82,12 @@ class Pengaturan extends React.Component<any, any> {
         this.handleNewPassword = this.handleNewPassword.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.clearState = this.clearState.bind(this);
+        this.handleFirstName = this.handleFirstName.bind(this);
+        this.handleLastName = this.handleLastName.bind(this);
+        this.handleEmail = this.handleEmail.bind(this);
+        this.handleUploadInput = this.handleUploadInput.bind(this);
+        this.handleChangeProfile = this.handleChangeProfile.bind(this);
+
     }
 
     validated() {
@@ -161,6 +175,100 @@ class Pengaturan extends React.Component<any, any> {
         })
     }
 
+    handleUploadInput(e) {
+        this.setState(prevState => ({
+            info: {
+                ...prevState.info,
+                img: e.target.value
+            }
+        }));
+    }
+
+    handleFirstName(e) {
+        this.setState(prevState => ({
+            info: {
+                ...prevState.info,
+                first_name: e.target.value,
+            }
+        }))
+    }
+
+    handleLastName(e) {
+        this.setState(prevState => ({
+            info: {
+                ...prevState.info,
+                last_name: e.target.value,
+            }
+        }))
+    }
+
+    handleEmail(e) {
+        this.setState(prevState => ({
+            info: {
+                ...prevState.info,
+                email: e.target.value,
+            }
+        }))
+    }
+
+    getUserDetail() {
+        const data_auth = localStorage.getItem("user-cozyproject");
+        Auth.check(data_auth).then((result: any) => {
+            console.log(result);
+            if (result.response === true) {
+                this.setState(prevState => ({
+                    img: result.data.data.detail_user.img,
+                    info: {
+                        ...prevState.info,
+                        first_name: result.data.data.user.first_name,
+                        last_name: result.data.data.user.last_name,
+                        email: result.data.data.user.email
+                    }
+                }))
+            }
+        })
+    }
+
+    componentDidMount(): void {
+        this.getUserDetail();
+    }
+
+    handleChangeProfile() {
+        this.setState({
+            disabled: true,
+            loading: true,
+        })
+        const data = {
+            img: this.state.info.img,
+            first_name: this.state.info.first_name,
+            last_name: this.state.info.last_name,
+            email: this.state.info.email,
+            user: JSON.parse(localStorage.getItem("user-cozyproject")).id_user,
+        }
+
+        Auth.updateProfile(data, this.state.data_auth).then((result) => {
+            console.log(result);
+            this.setState({
+                disabled: false,
+                loading: false,
+                change_profile: this.state.info
+            }, () => {
+                this.getUserDetail();
+            });
+            toast.success("Detail username berhasil diubah");
+        }).catch((reject) => {
+            console.log(reject);
+            toast.error("Detail username gagal diubah");
+            this.setState({
+                disabled: true,
+                loading: false,
+                change_profile: true
+            }, () => {
+                this.getUserDetail();
+            });
+        })
+    }
+
     render(): React.ReactNode {
         return (
             <>
@@ -179,42 +287,56 @@ class Pengaturan extends React.Component<any, any> {
                 />
                 <Sidebar />
                 {this.state.navigation}
-                <Navbar title="Pengaturan" />
+                <Navbar title="Pengaturan" change={this.state.change_profile} />
                 <div className="main">
                     <div className="main-content project">
                         <Tabs
-                            defaultActiveKey="profile"
+                            defaultActiveKey="info"
                             id="uncontrolled-tab-example"
                             className="mb-3"
                         >
-                            {/* <Tab eventKey="home" title="User">
+                            <Tab eventKey={"info"} title="Info User">
                                 <div className="box">
                                     <div className="box-header">
                                         <div className="me-auto">
-                                            <h4 className="card-title mb-0 fs-22">List User</h4>
-                                        </div>
-                                        <div className='me-3'>
-                                            <input type="text" className='form-control' placeholder='Cari User' />
-                                        </div>
-                                        <div className="card-options pr-3">
-                                            <div className="dropdown"> <a href="#" className="btn ripple btn-outline-primary dropdown-toggle fs-14" data-bs-toggle="dropdown" aria-expanded="false"> See All <i className="feather feather-chevron-down"></i> </a>
-                                                <ul className="dropdown-menu dropdown-menu-end" role="menu">
-                                                    <li><a href="#">Monthly</a></li>
-                                                    <li><a href="#">Yearly</a></li>
-                                                    <li><a href="#">Weekly</a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <div className='ms-3'>
-                                            <Button onClick={this.openUser} className='btn btn-primary btn-sm'>Tambah User Baru</Button>
+                                            <h4 className="card-title mb-0 fs-22">Info User</h4>
                                         </div>
                                     </div>
 
                                     <div className="box-body">
-                                        <DataTable columns={this.state.list_user.column} data={this.state.list_user.data} pagination />
+                                        <div className="d-flex mt-3">
+                                            <div>
+                                                <img className="rounded-circle header-profile-user" width={60} src={`http://localhost:8000${this.state.img}`}
+                                                    alt="Header Avatar" />
+                                            </div>
+                                            <div className="align-self-center" style={{ marginLeft: 15 }}>
+                                                <input className="form-control" type="file" onChange={this.handleUploadInput} />
+                                            </div>
+                                        </div>
+
+                                        <hr />
+                                        <div className="d-flex">
+                                            <div className="form-group flex-fill p-3">
+                                                <label htmlFor="">Nama Depan</label>
+                                                <input type="text" className="form-control" onChange={this.handleFirstName} value={this.state.info.first_name} />
+                                            </div>
+                                            <div className="form-group flex-fill p-3">
+                                                <label htmlFor="">Nama Belakang</label>
+                                                <input type="text" className="form-control" onChange={this.handleLastName} value={this.state.info.last_name} />
+                                            </div>
+                                        </div>
+
+                                        <div className="form-group flex-fill p-3">
+                                            <label htmlFor="">Email</label>
+                                            <input type="text" className="form-control" onChange={this.handleEmail} value={this.state.info.email} />
+                                        </div>
+
+                                        <div className="text-end">
+                                            <button className="btn btn-primary btn-lg fs-16 btn btn-primary" onClick={this.handleChangeProfile}>SIMPAN <LoadingButton show={this.state.loading} /></button>
+                                        </div>
                                     </div>
                                 </div>
-                            </Tab> */}
+                            </Tab>
                             <Tab eventKey="profile" title="Profile">
                                 <div className="box">
                                     <div className="box-header">

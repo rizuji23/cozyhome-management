@@ -14,6 +14,7 @@ class ModalAddProgress extends React.Component<any, any> {
                 desc: "",
                 percentage: 0,
                 id_user: JSON.parse(localStorage.getItem("user-cozyproject")).id_user,
+                foto: "",
             },
             disabled: true,
         }
@@ -23,6 +24,7 @@ class ModalAddProgress extends React.Component<any, any> {
         this.handleStatus = this.handleStatus.bind(this);
         this.handleDesc = this.handleDesc.bind(this);
         this.clearState = this.clearState.bind(this);
+        this.handleFoto = this.handleFoto.bind(this);
     }
 
     validated() {
@@ -78,6 +80,16 @@ class ModalAddProgress extends React.Component<any, any> {
         });
     }
 
+    handleFoto(e) {
+        console.log(e.target.files)
+        this.setState(prevState => ({
+            progress: {
+                ...prevState.progress,
+                foto: e.target.files,
+            }
+        }));
+    }
+
     componentDidUpdate(prevProps: Readonly<any>, prevState: Readonly<any>, snapshot?: any): void {
         if (prevProps.isOpen !== this.props.isOpen) {
             this.clearState();
@@ -107,6 +119,11 @@ class ModalAddProgress extends React.Component<any, any> {
                                 <option value="Perakitan Projek Di Lokasi">Perakitan Projek Di Lokasi</option>
                                 <option value="Projek Selesai">Projek Selesai</option>
                             </select>
+                        </div>
+
+                        <div className='form-group mt-3'>
+                            <label htmlFor="">Foto</label>
+                            <input type="file" className='form-control' onChange={this.handleFoto} />
                         </div>
 
                         <div className='form-group mt-3'>
