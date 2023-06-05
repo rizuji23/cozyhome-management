@@ -108,7 +108,7 @@ class Dashboard extends React.Component<any, any> {
                     },
                     yaxis: {
                         title: {
-                            text: 'Rp (juta)'
+                            text: 'Rp (rupiah)'
                         }
                     },
                     fill: {
@@ -117,7 +117,7 @@ class Dashboard extends React.Component<any, any> {
                     tooltip: {
                         y: {
                             formatter: function (val) {
-                                return "$ " + val + " thousands"
+                                return "Rp. " + val
                             }
                         }
                     }

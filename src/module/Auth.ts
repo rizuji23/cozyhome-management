@@ -54,7 +54,7 @@ class Auth {
         const formData = new FormData();
         formData.append("first_name", data.first_name)
         formData.append("last_name", data.last_name)
-        formData.append("img", data.img)
+        formData.append("img", data.img[0])
         formData.append("email", data.email)
         formData.append("user", data.user)
         return new Promise((res, rej) => {

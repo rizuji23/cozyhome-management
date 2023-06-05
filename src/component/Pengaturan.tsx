@@ -179,7 +179,7 @@ class Pengaturan extends React.Component<any, any> {
         this.setState(prevState => ({
             info: {
                 ...prevState.info,
-                img: e.target.value
+                img: e.target.files
             }
         }));
     }
