@@ -123,6 +123,30 @@ class ProjectModule {
         });
     }
 
+    static async delete(id, data_auth):Promise<any> {
+        const auth:any = JSON.parse(data_auth);
+        return new Promise((res, rej) => {
+            axios({
+                url: '/api/v1/project/',
+                method: 'DELETE',
+                headers: {
+                    Accept: 'application/json',
+                    'Authorization': 'Bearer ' + auth.access
+                },
+                params: {id: id}
+            }).then((result) => {
+                console.log(result);
+                if (result.status === 201) {
+                    res({response: true, data: 'data is saved'});
+                } else {
+                    rej({response: false, data: 'invalid'});
+                }
+            }).catch((reject) => {
+                rej({response: false, data: 'error'})
+            })
+        });
+    }
+
     static async getCount(data_auth):Promise<any> {
         const auth:any = JSON.parse(data_auth);
         return new Promise((res, rej) => {

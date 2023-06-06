@@ -29,7 +29,10 @@ class App extends React.Component<any, any> {
   }
 
   componentDidMount(): void {
-    sidebar();
+    setTimeout(() => {
+      sidebar();
+      console.log("D")
+    }, 1000)
   }
 
   componentDidUpdate(prevProps: Readonly<any>, prevState: Readonly<any>, snapshot?: any): void {

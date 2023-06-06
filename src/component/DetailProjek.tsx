@@ -7,7 +7,7 @@ import ModalAddBahan from './modal/ModalAddBahan';
 import ModalAddProgress from './modal/ModalAddProgress';
 import ModalEditInformasi from './modal/ModalEditInformasi';
 import ModalEditCost from './modal/ModalEditCost';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import ModalAddPekerjaan from './modal/ModalAddPekerjaan';
 import { withRouter } from './etc/withRouter';
 import ProjectModule from '../module/ProjectModule';
@@ -21,6 +21,11 @@ import moment from 'moment';
 import Stok from '../module/Stok';
 import PekerjaanLain from '../module/PekerjaanLain';
 import LoadingFull from './etc/LoadingFull';
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
+import ModalDetailPekerjaanLain from './modal/ModalDetailPekerjaanLain';
+import ModalDetailProgress from './modal/ModalDetailProgress';
+const MySwal = withReactContent(Swal)
 
 class DetailProjek extends React.Component<any, any> {
     constructor(props) {
@@ -79,6 +84,10 @@ class DetailProjek extends React.Component<any, any> {
                 {
                     name: "Tanggal",
                     selector: row => row.created_at,
+                },
+                {
+                    name: "Opsi",
+                    selector: row => row.opsi,
                 }
             ],
             data_progress: [],
@@ -103,6 +112,10 @@ class DetailProjek extends React.Component<any, any> {
                 {
                     name: "Tanggal",
                     selector: row => row.created_at,
+                },
+                {
+                    name: "Opsi",
+                    selector: row => row.opsi,
                 }
             ],
             data_lain: [],
@@ -123,6 +136,15 @@ class DetailProjek extends React.Component<any, any> {
             },
             loading_modal: false,
             loading: true,
+            navigate: false,
+            isOpenDetailPekerjaan: {
+                show: false,
+                data: ""
+            },
+            isOpenDetailProgress: {
+                show: false,
+                data: "",
+            }
         }
 
         console.log(this.props)
@@ -147,6 +169,47 @@ class DetailProjek extends React.Component<any, any> {
         this.getStokOut = this.getStokOut.bind(this);
         this.handleSimpanPekerjaanLain = this.handleSimpanPekerjaanLain.bind(this);
         this.getPekerjaanLain = this.getPekerjaanLain.bind(this);
+        this.handleOpenDelete = this.handleOpenDelete.bind(this);
+        this.handleOpenDetailPekerjaan = this.handleOpenDetailPekerjaan.bind(this);
+        this.handleCloseDetailPekerjaan = this.handleCloseDetailPekerjaan.bind(this);
+        this.handleOpenProgress = this.handleOpenProgress.bind(this);
+        this.handleCloseProgress = this.handleCloseProgress.bind(this);
+    }
+
+    handleOpenProgress(data) {
+        this.setState({
+            isOpenDetailProgress: {
+                show: true,
+                data: data,
+            }
+        })
+    }
+
+    handleCloseProgress() {
+        this.setState({
+            isOpenDetailProgress: {
+                show: false,
+                data: "",
+            }
+        })
+    }
+
+    handleOpenDetailPekerjaan(data) {
+        this.setState({
+            isOpenDetailPekerjaan: {
+                show: true,
+                data: data
+            },
+        })
+    }
+
+    handleCloseDetailPekerjaan() {
+        this.setState({
+            isOpenDetailPekerjaan: {
+                show: false,
+                data: ""
+            },
+        })
     }
 
     openBahan() {
@@ -256,6 +319,9 @@ class DetailProjek extends React.Component<any, any> {
             result.data.data.progress_project.map(el => {
                 el['no'] = no++;
                 el['created_at'] = moment(el.created_at, "YYYY-MM-DD").format("DD-MM-YYYY");
+                el['opsi'] = <>
+                    <a className='text-success me-2' href='javascript:void(0)' onClick={() => this.handleOpenProgress(el)}>Detail</a>
+                </>
             })
             this.setState({
                 data_progress: result.data.data.progress_project,
@@ -279,6 +345,9 @@ class DetailProjek extends React.Component<any, any> {
                 el['no'] = no++;
                 el['created_at'] = moment(el.created_at, "YYYY-MM-DD").format("DD-MM-YYYY");
                 el['harga'] = System.convertRupiah(el.harga)
+                el['opsi'] = <>
+                    <a className='text-success me-2' href='javascript:void(0)' onClick={() => this.handleOpenDetailPekerjaan(el)}>Detail</a>
+                </>
             })
             this.setState({
                 data_lain: result.data.data.pekerjaan_lain,
@@ -447,9 +516,35 @@ class DetailProjek extends React.Component<any, any> {
         });
     }
 
+    handleOpenDelete() {
+        MySwal.fire({
+            title: "Apa kamu yakin?",
+            text: 'Data tidak akan bisa dikembalikan.',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Iya',
+            icon: 'warning',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                ProjectModule.delete(this.state.data_project.id_project, this.state.data_auth).then((result) => {
+                    toast.success("Projek berhasil dihapus.");
+                    this.setState({
+                        navigate: <Navigate to={"/projek"} replace={true} />
+                    })
+                }).catch((err) => {
+                    toast.error("Projek gagal dihapus");
+                })
+            }
+        })
+    }
+
     render(): React.ReactNode {
         return (
             <>
+                {
+                    this.state.navigate
+                }
                 <HelmetTitle title="Detail Projek" />
                 <ToastContainer
                     position="top-right"
@@ -626,20 +721,20 @@ class DetailProjek extends React.Component<any, any> {
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
 
-                        {/* <div className='box'>
-                            <div className='box-body'>
-                                <div className='alert alert-danger'>
-                                    <h6>Zona Berbahaya</h6>
-                                    <hr />
-                                    <div className='d-grid'>
-                                        <button className='btn btn-danger'>Hapus Projek</button>
+                                <div className='box'>
+                                    <div className='box-body'>
+                                        <div className='alert alert-danger'>
+                                            <h6>Zona Berbahaya</h6>
+                                            <hr />
+                                            <div className='d-grid'>
+                                                <button className='btn btn-danger' onClick={this.handleOpenDelete}>Hapus Projek</button>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div> */}
+                        </div>
                     </div>
                 </div>
 
@@ -648,6 +743,8 @@ class DetailProjek extends React.Component<any, any> {
                 <ModalEditInformasi isOpen={this.state.isOpenInformasi} closeModal={this.closeInformasi} data_project={this.state.data_project} handleEditProject={this.handleEditProject} />
                 <ModalAddPekerjaan handleSimpanPekerjaanLain={this.handleSimpanPekerjaanLain} isOpen={this.state.isOpenPekerjaan} closeModal={this.closePekerjaan} />
                 <ModalEditCost isOpen={this.state.isOpenCost} handleEditCost={this.handleEditCost} closeModal={this.closeCost} cost_data={this.state.cost_data} title={this.state.data_cost} />
+                <ModalDetailPekerjaanLain isOpen={this.state.isOpenDetailPekerjaan} closeModal={this.handleCloseDetailPekerjaan} id_project={this.props.params.id} getPekerjaanLain={this.getPekerjaanLain} getCost={this.getCost} getDetail={this.getDetail} />
+                <ModalDetailProgress isOpen={this.state.isOpenDetailProgress} closeModal={this.handleCloseProgress} id_project={this.props.params.id} getProgress={this.getProgress} />
             </>
         )
     }

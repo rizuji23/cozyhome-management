@@ -12,6 +12,11 @@ import LoadingFull from './etc/LoadingFull';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 import System from '../module/System';
+import ModalAddUser from './modal/ModalAddUser';
+import ModalEditCustomer from './modal/ModalEditCustomer';
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
+const MySwal = withReactContent(Swal)
 
 class DetailCustomer extends React.Component<any, any> {
     constructor(props) {
@@ -61,12 +66,37 @@ class DetailCustomer extends React.Component<any, any> {
             loading: true,
             navigation: false,
             search: "",
+            isOpen: {
+                show: false,
+                customer_data: {}
+            },
+            navigate: false,
         }
 
-        console.log(this.props);
         this.getDetail = this.getDetail.bind(this);
         this.handleClickRow = this.handleClickRow.bind(this);
         this.handleSearch = this.handleSearch.bind(this);
+        this.handleCloseCustomer = this.handleCloseCustomer.bind(this);
+        this.handleOpenCustomer = this.handleOpenCustomer.bind(this);
+        this.handleOpenDelete = this.handleOpenDelete.bind(this);
+    }
+
+    handleOpenCustomer() {
+        this.setState({
+            isOpen: {
+                show: true,
+                customer_data: this.state.detail_customer
+            },
+        })
+    }
+
+    handleCloseCustomer() {
+        this.setState({
+            isOpen: {
+                show: false,
+                customer_data: {}
+            },
+        })
     }
 
     handleClickRow(e) {
@@ -108,9 +138,37 @@ class DetailCustomer extends React.Component<any, any> {
         })
     }
 
+
+
+    handleOpenDelete() {
+        MySwal.fire({
+            title: "Apa kamu yakin?",
+            text: 'Data tidak akan bisa dikembalikan, dan data projek akan ikut terhapus.',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Iya',
+            icon: 'warning',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                console.log("DD");
+                console.log("D")
+                CustomerModule.delete(this.props.params.id, this.state.data_auth).then((result) => {
+                    toast.success("Customer berhasil dihapus.");
+                    this.setState({
+                        navigate: <Navigate to="/customer" replace={true} />
+                    })
+                }).catch((err) => {
+                    toast.error("Customer gagal dihapus.");
+                })
+            }
+        })
+    }
+
     render(): React.ReactNode {
         return (
             <>
+                {this.state.navigate}
                 <LoadingFull display={this.state.loading} />
                 <HelmetTitle title="Detail Customer" />
                 <ToastContainer
@@ -168,6 +226,18 @@ class DetailCustomer extends React.Component<any, any> {
                                             </li>
                                         </ul>
                                     </div>
+
+                                    <div className='alert alert-danger mt-3'>
+                                        <div className='d-flex justify-content-end'>
+                                            <div className='align-self-center'>
+                                                <b>Zona Berbahaya </b>
+                                            </div>
+                                            <div className='ms-3'>
+                                                <button className='btn btn-success btn-sm me-2' onClick={this.handleOpenCustomer}>Edit</button>
+                                                <button className='btn btn-danger btn-sm' onClick={this.handleOpenDelete}>Hapus</button>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </Tab>
 
@@ -184,7 +254,6 @@ class DetailCustomer extends React.Component<any, any> {
                                     </div>
                                     <div className="box-body pb-0 table-responsive activity mt-18">
                                         <DataTable onRowClicked={this.handleClickRow} columns={this.state.columns} data={this.state.data.filter((data) => {
-                                            console.log(data)
                                             if (this.state.search === "") {
                                                 return data;
                                             } else if (data.nama_project_2.toLowerCase().includes(this.state.search.toLowerCase())) {
@@ -197,6 +266,8 @@ class DetailCustomer extends React.Component<any, any> {
                         </Tabs>
                     </div>
                 </div>
+
+                <ModalEditCustomer isOpen={this.state.isOpen} closeModal={this.handleCloseCustomer} id_customer={this.props.params.id} getDetail={this.getDetail} />
             </>
         )
     }

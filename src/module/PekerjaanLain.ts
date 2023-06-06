@@ -48,6 +48,56 @@ class PekerjaanLain {
             });
         });
     }
+
+    static async update(data, data_auth):Promise<any> {
+        const auth:any = JSON.parse(data_auth);
+        return new Promise((res, rej) => {
+            axios({
+                url: "/api/v1/pekerjaan_lain/",
+                method: "PUT",
+                headers: {
+                    Accept: "application/json",
+                    "Authorization": "Bearer " + auth.access
+                },
+                data: data,
+                params: {id: data.id_pekerjaan_lain}
+            }).then((result) => {
+                console.log(result);
+                if (result.status === 201) {
+                    res({response: true, data: result.data})
+                } else {
+                    rej({response: false, data: "invalid"});
+                }
+            }).catch((reject) => {
+                rej({response: false, data: "error"});
+            });
+        });
+    }
+
+    static async delete(data, data_auth):Promise<any> {
+        const auth:any = JSON.parse(data_auth);
+        return new Promise((res, rej) => {
+            axios({
+                url: "/api/v1/pekerjaan_lain/",
+                method: "DELETE",
+                headers: {
+                    Accept: "application/json",
+                    "Authorization": "Bearer " + auth.access
+                },
+                data: data,
+                params: {id: data.id_pekerjaan_lain}
+            }).then((result) => {
+                console.log(result);
+                if (result.status === 201) {
+                    res({response: true, data: result.data})
+                } else {
+                    rej({response: false, data: "invalid"});
+                }
+            }).catch((reject) => {
+                rej({response: false, data: "error"});
+            });
+        });
+    }
 }
 
 export default PekerjaanLain;
