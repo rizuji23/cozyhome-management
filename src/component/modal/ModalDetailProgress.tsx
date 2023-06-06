@@ -174,7 +174,7 @@ class ModalDetailProgress extends React.Component<any, any> {
                         </div>
 
                         <div className='form-group mt-3'>
-                            <img src={`http://localhost:8000${this.state.progress.foto}`} width={150} alt="" /><br />
+                            <img src={`https://cozyhome.api.weworks.ink${this.state.progress.foto}`} width={150} alt="" /><br />
                             <label htmlFor="">Foto</label>
                             <input type="file" className='form-control' onChange={this.handleFoto} />
                         </div>

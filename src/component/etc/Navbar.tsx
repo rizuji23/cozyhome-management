@@ -50,7 +50,7 @@ class Navbar extends React.Component<any, any> {
                     <div className="d-flex align-items-center">
                         <div className="dropdown d-inline-block mt-12">
                             <button type="button" onClick={() => document.location.href = '/pengaturan'} className="btn header-item waves-effect" id="page-header-user-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <img className="rounded-circle header-profile-user" width={60} src={`http://localhost:8000${this.state.img}`}
+                                <img className="rounded-circle header-profile-user" width={60} src={`https://cozyhome.api.weworks.ink${this.state.img}`}
                                     alt="Header Avatar" />
                                 <span className="pulse-css"></span>
                                 <span className="info d-xl-inline-block  color-span">
