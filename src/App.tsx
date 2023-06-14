@@ -47,8 +47,6 @@ class App extends React.Component<any, any> {
         <Route path="/" element={<Login />}></Route>
         <Route element={<AuthCheck />}>
           <Route path="/dashboard" element={<Dashboard />}></Route>
-
-
           <Route path='/projek' element={<Projek />}></Route>
           <Route path='/tambah_projek' element={<AddProjek />}></Route>
           <Route path='/detail_projek/:id' element={<DetailProjek />}></Route>
@@ -63,7 +61,6 @@ class App extends React.Component<any, any> {
           <Route path='/print_stok/:id' element={<StokPrint />}></Route>
           <Route path='/print_pekerjaan/:id' element={<PekerjaanLainPrint />}></Route>
           <Route path='/print_project/:id' element={<ProjectPrint />}></Route>
-
           <Route path='/pengaturan' element={<Pengaturan />}></Route>
         </Route>
         <Route path='/logout' element={<Logout />}></Route>

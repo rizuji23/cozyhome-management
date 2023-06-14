@@ -147,7 +147,11 @@ class Login extends React.Component<any, any> {
                                             </div>
                                             <div className="mb-24">
                                                 <label className="form-label mb-14">Username</label>
-                                                <input type="text" className="form-control" onChange={this.handleUsername} id="username" placeholder="Masukan Username" />
+                                                <input type="text" className="form-control" onChange={this.handleUsername} onKeyUp={(e) => {
+                                                    if (e.key === "Enter") {
+                                                        this.handleLogin();
+                                                    }
+                                                }} id="username" placeholder="Masukan Username" />
                                                 {this.state.msg_username}
 
                                             </div>
@@ -156,15 +160,15 @@ class Login extends React.Component<any, any> {
                                                     <div className="flex-grow-1">
                                                         <label className="form-label mb-14">Password</label>
                                                     </div>
-                                                    {/* <div className="flex-shrink-0">
-                                                            <div className="">
-                                                                <a href="#" className="text-muted">Forgot password?</a>
-                                                            </div>
-                                                        </div> */}
+
                                                 </div>
 
                                                 <div className="input-group auth-pass-inputgroup">
-                                                    <input type="password" className="form-control" onChange={this.handlePassword} placeholder="Masukan Password" aria-label="Password" aria-describedby="password-addon" />
+                                                    <input type="password" className="form-control" onChange={this.handlePassword} onKeyUp={(e) => {
+                                                        if (e.key === "Enter") {
+                                                            this.handleLogin();
+                                                        }
+                                                    }} placeholder="Masukan Password" aria-label="Password" aria-describedby="password-addon" />
                                                     <button className="btn shadow-none ms-0" type="button" id="password-addon"><i className="far fa-eye-slash"></i></button>
                                                 </div>
                                                 {this.state.msg_password}

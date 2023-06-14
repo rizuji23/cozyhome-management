@@ -6,6 +6,7 @@ import InfoProject from './etc/InfoProject';
 import { Link } from 'react-router-dom';
 import ReactApexChart from 'react-apexcharts';
 import InfoUang from './etc/InfoUang';
+import Analisis from '../module/Analisis';
 
 class Dashboard extends React.Component<any, any> {
     constructor(props) {
@@ -72,7 +73,7 @@ class Dashboard extends React.Component<any, any> {
                     data: [44, 55, 57, 56, 61, 58, 63, 60, 66, 66]
                 }, {
                     name: 'Cost Produksi',
-                    data: [76, 85, 101, 98, 87, 105, 91, 114, 94, 60, 66, 66]
+                    data: [76, 101, 98, 87, 105, 91, 114, 94, 60, 66, 66]
                 }, {
                     name: 'Cost Design',
                     data: [35, 41, 36, 26, 45, 48, 52, 53, 41, 60, 66, 66]
@@ -122,8 +123,53 @@ class Dashboard extends React.Component<any, any> {
                         }
                     }
                 }
-            }
+            },
+            data_auth: localStorage.getItem("user-cozyproject"),
         };
+
+        this.getAnalisis = this.getAnalisis.bind(this);
+    }
+
+    componentDidMount(): void {
+        this.getAnalisis();
+    }
+
+    getAnalisis() {
+        Analisis.get(this.state.data_auth).then((result) => {
+            console.log("analisis", result);
+            const data = Analisis.calculateCost(result.data.data.cash_flow);
+            const data_project = Analisis.calculateProject(result.data.data.project);
+            const data_kategori = Analisis.calculateKategori(result.data.data.kategori);
+            this.setState(prevState => ({
+                bar_chart: {
+                    ...prevState.bar_chart,
+                    series: data.series,
+                    options: {
+                        ...prevState.options,
+                        xaxis: {
+                            categories: data.categories
+                        }
+                    }
+                },
+
+                line_chart: {
+                    ...prevState.line_chart,
+                    series: data_project.series,
+                    options: {
+                        ...prevState.options,
+                        xaxis: {
+                            ...prevState.xaxis,
+                            categories: data_project.categories
+                        }
+                    }
+                },
+
+                pie_chart: {
+                    ...prevState.pie_chart,
+                    series: data_kategori.series,
+                }
+            }))
+        })
     }
 
     render(): React.ReactNode {

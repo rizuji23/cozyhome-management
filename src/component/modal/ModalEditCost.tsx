@@ -15,6 +15,7 @@ class ModalEditCost extends React.Component<any, any> {
     }
 
     checkCost(data) {
+        console.log(" this.props.cost_data.id_cost_project", this.props.cost_data.id_cost_project)
         if (data === "Cost Produksi") {
             this.setState({
                 cost: {

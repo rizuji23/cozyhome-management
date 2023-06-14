@@ -297,7 +297,7 @@ class DetailProjek extends React.Component<any, any> {
         const id_project = this.props.params.id;
 
         Cost.get({ id: id_project }, this.state.data_auth).then((result) => {
-            console.log(result);
+            console.log("cost", result);
             this.setState({
                 cost_data: result.data.data.cost_project,
                 loading: false,

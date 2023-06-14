@@ -49,6 +49,7 @@ class Cost {
     }
 
     static async editProduksi(data, data_auth, url):Promise<any> {
+        console.log("data", data);
         const auth:any = JSON.parse(data_auth);
         return new Promise((res, rej) => {
             axios({

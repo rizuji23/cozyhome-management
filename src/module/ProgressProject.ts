@@ -8,7 +8,7 @@ class ProgressProject {
         formData.append('desc', data_project.desc)
         formData.append('percentage', data_project.percentage)
         formData.append('id_user', data_project.id_user)
-        formData.append('foto', data_project.foto[0])
+        formData.append('foto', data_project.foto !== undefined ? data_project?.foto[0] :  undefined)
         const auth:any = JSON.parse(data_auth);
         return new Promise((res, rej) => {
             axios({
@@ -64,7 +64,7 @@ class ProgressProject {
         formData.append('desc', data_project.desc)
         formData.append('percentage', data_project.percentage)
         formData.append('id_user', data_project.id_user)
-        formData.append('foto', data_project.foto[0])
+        formData.append('foto', data_project?.foto[0] || undefined)
         formData.append('id_project', data_project.id_project)
         const auth:any = JSON.parse(data_auth);
         return new Promise((res, rej) => {

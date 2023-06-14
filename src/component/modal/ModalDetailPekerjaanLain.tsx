@@ -66,7 +66,7 @@ class ModalDetailPekerjaanLain extends React.Component<any, any> {
         this.setState(prevState => ({
             lain: {
                 ...prevState.lain,
-                harga: e.target.value,
+                harga: System.convertInt(e.target.value)
             }
         }), () => {
             this.validated();

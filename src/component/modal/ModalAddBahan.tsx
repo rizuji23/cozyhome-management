@@ -14,7 +14,7 @@ class ModalAddBahan extends React.Component<any, any> {
             data: [],
             data_auth: localStorage.getItem("user-cozyproject"),
             harga: 0,
-            qty: 0,
+            qty: "",
             total_all: 0,
             disabled: true,
             id_material: "",
@@ -31,7 +31,7 @@ class ModalAddBahan extends React.Component<any, any> {
     clearState() {
         this.setState({
             harga: 0,
-            qty: 0,
+            qty: "",
             total_all: 0,
             disabled: true,
             id_material: "",
@@ -50,7 +50,7 @@ class ModalAddBahan extends React.Component<any, any> {
             });
             console.log(data);
             this.setState({
-                data: data
+                data: [{ name: "Pilih Nama Bahan", value: "" }, ...data]
             })
         }).catch((rejects) => {
             console.log(rejects);
@@ -69,22 +69,28 @@ class ModalAddBahan extends React.Component<any, any> {
     }
 
     handleBahan(e) {
+        console.log(e);
         const data = JSON.parse(e);
-        console.log(data);
-        Stok.getMaterial(data.id_material, this.state.data_auth).then((result) => {
-            console.log(result);
-            this.setState({
-                harga: result.data.data.material.harga,
-                id_material: result.data.data.material.id_material,
-                id_stok_gudang: data.id_stok_gudang,
-                stok: data.stok
-            }, () => {
-                this.handleQty({ target: { value: this.state.qty } });
-            });
+        if (e !== null) {
+            console.log(data);
+            Stok.getMaterial(data.id_material, this.state.data_auth).then((result) => {
+                console.log(result);
+                this.setState({
+                    harga: result.data.data.material.harga,
+                    id_material: result.data.data.material.id_material,
+                    id_stok_gudang: data.id_stok_gudang,
+                    stok: data.stok
+                }, () => {
+                    this.handleQty({ target: { value: this.state.qty } });
+                });
 
-        }).catch((rejects) => {
-            console.log(rejects);
-        })
+            }).catch((rejects) => {
+                console.log(rejects);
+            })
+        } else {
+            this.clearState()
+        }
+
     }
 
     handleQty(e) {
@@ -129,7 +135,7 @@ class ModalAddBahan extends React.Component<any, any> {
 
                         <div className='form-group mt-3'>
                             <label htmlFor="">Qty</label>
-                            <input type="number" onChange={this.handleQty} className='form-control' />
+                            <input type="number" onChange={this.handleQty} value={this.state.qty} className='form-control' />
                         </div>
                         <div className='mt-3'>
                             <small>Harga Satuan</small>

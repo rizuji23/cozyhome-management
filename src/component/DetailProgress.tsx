@@ -91,7 +91,8 @@ class DetailProgress extends React.Component<any, any> {
                                                     </div>
                                                     <div className="col-sm">
                                                         <div className="item-progress">
-                                                            <small>{el2.nama_progress}</small>
+                                                            <small>{el2.nama_progress}</small><br />
+                                                            <img src={`http://localhost:8000/media/${el2.foto}`} className="img-fluid" alt="" />
                                                             <p>{el2.desc}</p>
                                                         </div>
                                                     </div>
