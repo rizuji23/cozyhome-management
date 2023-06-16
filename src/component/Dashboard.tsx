@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import ReactApexChart from 'react-apexcharts';
 import InfoUang from './etc/InfoUang';
 import Analisis from '../module/Analisis';
+import System from '../module/System';
 
 class Dashboard extends React.Component<any, any> {
     constructor(props) {
@@ -118,7 +119,7 @@ class Dashboard extends React.Component<any, any> {
                     tooltip: {
                         y: {
                             formatter: function (val) {
-                                return "Rp. " + val
+                                return "Rp. " + System.convertRupiah(val)
                             }
                         }
                     }
