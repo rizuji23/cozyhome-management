@@ -22,6 +22,10 @@ import PekerjaanLainPrint from './component/export/PekerjaanLainPrint';
 import ProjectPrint from './component/export/ProjectPrint';
 import Logout from './component/etc/Logout';
 import AuthCheck from './component/AuthCheck';
+import RincianUnit from './component/rincian_unit/RincianUnit';
+import KategoriUnit from './component/rincian_unit/KategoriUnit';
+import AddRincianUnit from './component/rincian_unit/AddRincianUnit';
+import DetailUnit from './component/rincian_unit/DetailUnit';
 
 class App extends React.Component<any, any> {
   constructor(props) {
@@ -29,10 +33,7 @@ class App extends React.Component<any, any> {
   }
 
   componentDidMount(): void {
-    setTimeout(() => {
-      sidebar();
-      console.log("D")
-    }, 1000)
+    sidebar();
   }
 
   componentDidUpdate(prevProps: Readonly<any>, prevState: Readonly<any>, snapshot?: any): void {
@@ -62,6 +63,14 @@ class App extends React.Component<any, any> {
           <Route path='/print_pekerjaan/:id' element={<PekerjaanLainPrint />}></Route>
           <Route path='/print_project/:id' element={<ProjectPrint />}></Route>
           <Route path='/pengaturan' element={<Pengaturan />}></Route>
+
+          <Route path='/rincian_unit' element={<RincianUnit />}></Route>
+          <Route path='/kategori_unit' element={<KategoriUnit />}></Route>
+          <Route path='/add_rincian_unit' element={<AddRincianUnit />}></Route>
+          <Route path='/detail_unit/:id' element={<DetailUnit />}></Route>
+
+
+
         </Route>
         <Route path='/logout' element={<Logout />}></Route>
       </Routes>

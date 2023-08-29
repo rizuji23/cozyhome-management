@@ -1,5 +1,8 @@
 import React from "react";
 import Auth from "../../module/Auth";
+import { Offcanvas } from "react-bootstrap";
+import { Link } from "react-router-dom";
+import { sidebar } from "../../js/main";
 
 class Navbar extends React.Component<any, any> {
     constructor(props) {
@@ -8,6 +11,7 @@ class Navbar extends React.Component<any, any> {
             name: JSON.parse(localStorage.getItem("user-cozyproject")).name,
             role: JSON.parse(localStorage.getItem("user-cozyproject")).role,
             img: "/img_user/profile.png",
+            show: false,
         }
     }
 
@@ -24,8 +28,11 @@ class Navbar extends React.Component<any, any> {
         })
     }
 
+
+
     componentDidMount(): void {
         this.getUserDetail();
+        sidebar();
     }
 
     componentDidUpdate(prevProps: Readonly<any>, prevState: Readonly<any>, snapshot?: any): void {
@@ -34,12 +41,22 @@ class Navbar extends React.Component<any, any> {
         }
     }
 
+    handleClose() {
+        this.setState({
+            show: false,
+        })
+    }
+
     render(): React.ReactNode {
         return (
             <>
                 <div className="main-header">
                     <div className="d-flex">
-                        <div className="mobile-toggle" id="mobile-toggle">
+                        <div className="mobile-toggle" onClick={() => {
+                            this.setState({
+                                show: true,
+                            })
+                        }}>
                             <i className='bx bx-menu'></i>
                         </div>
                         <div className="main-title">
@@ -62,6 +79,77 @@ class Navbar extends React.Component<any, any> {
                         </div>
                     </div>
                 </div>
+
+                <Offcanvas show={this.state.show} onHide={() => this.handleClose()}>
+                    <Offcanvas.Header closeButton>
+                        <Offcanvas.Title className="p-3">
+                            <Link to="/dashboard">
+                                <img src="/images/logo.png" width={100} alt="Protend logo" />
+                            </Link>
+                        </Offcanvas.Title>
+                    </Offcanvas.Header>
+                    <Offcanvas.Body>
+                        <div className="simlebar-sc">
+                            <ul className="sidebar-menu tf  p-2">
+                                <li>
+                                    <Link to="/dashboard">
+                                        <i className='bx bxs-home' ></i>
+                                        <span>Dashboard</span>
+                                    </Link>
+                                </li>
+                                <li className="">
+                                    <Link to="/projek" className="">
+                                        <i className='bx bxs-bolt'></i>
+                                        <span>Projek</span>
+                                    </Link>
+                                </li>
+
+                                <li className="">
+                                    <Link to="/customer" className="">
+                                        <i className='bx bxs-user'></i>
+                                        <span>Customer</span>
+                                    </Link>
+                                </li>
+
+                                <li className="">
+                                    <Link to="/rincian_unit" className="">
+                                        <i className='bx bxs-pyramid'></i>
+                                        <span>Rincian per unit</span>
+
+                                    </Link>
+                                </li>
+
+                                <li className="">
+                                    <Link to="/kategori_unit" className="">
+                                        <i className='bx bxs-archive-in'></i>
+                                        <span>Kategori Unit</span>
+
+                                    </Link>
+                                </li>
+
+                                <li>
+                                    <Link to="/stok_gudang">
+                                        <i className='bx bxs-box'></i>
+                                        <span>Stok Gudang</span>
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link to="/pengaturan">
+                                        <i className='bx bxs-cog'></i>
+                                        <span>Pengaturan</span>
+                                    </Link>
+                                </li>
+
+                                <li>
+                                    <Link to="/logout">
+                                        <i className='bx bxs-log-out-circle' ></i>
+                                        <span>Logout</span>
+                                    </Link>
+                                </li>
+                            </ul>
+                        </div>
+                    </Offcanvas.Body>
+                </Offcanvas>
             </>
         )
     }

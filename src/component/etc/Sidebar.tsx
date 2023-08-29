@@ -14,9 +14,9 @@ class Sidebar extends React.Component<any, any> {
                         <Link to="/dashboard">
                             <img src="/images/logo.png" alt="Protend logo" />
                         </Link>
-                        <div className="sidebar-close" id="sidebar-close">
+                        {/* <div className="sidebar-close" id="sidebar-close">
                             <i className='bx bx-left-arrow-alt'></i>
-                        </div>
+                        </div> */}
                     </div>
                     <div className="simlebar-sc" data-simplebar>
                         <ul className="sidebar-menu tf">
@@ -61,6 +61,26 @@ class Sidebar extends React.Component<any, any> {
                                     <li>
                                         <Link to="/tambah_customer">
                                             Tambah Customer
+                                        </Link>
+                                    </li>
+                                </ul>
+                            </li>
+
+                            <li className="sidebar-submenu">
+                                <Link to="/rincian_unit" className="sidebar-menu-dropdown">
+                                    <i className='bx bxs-pyramid'></i>
+                                    <span>Rincian per unit</span>
+                                    <div className="dropdown-icon"><i className='bx bx-chevron-down'></i></div>
+                                </Link>
+                                <ul className="sidebar-menu sidebar-menu-dropdown-content">
+                                    <li>
+                                        <Link to="/rincian_unit">
+                                            List Rincian Per Unit
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <Link to="/kategori_unit">
+                                            List Kategori Unit
                                         </Link>
                                     </li>
                                 </ul>
