@@ -306,7 +306,7 @@ class Pengaturan extends React.Component<any, any> {
                                     <div className="box-body">
                                         <div className="d-flex mt-3">
                                             <div>
-                                                <img className="rounded-circle header-profile-user" width={60} src={`https://cozyhome.api.weworks.ink${this.state.img}`}
+                                                <img className="rounded-circle header-profile-user" width={60} src={`https://apicozy.rlstudio.my.id${this.state.img}`}
                                                     alt="Header Avatar" />
                                             </div>
                                             <div className="align-self-center" style={{ marginLeft: 15 }}>
